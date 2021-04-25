@@ -15,12 +15,12 @@ export class Login extends Component {
 		e.preventDefault();
 		
 		//	Make request to backend to get account
-		axios.post("Link To Backend", {
+		axios.post("http://localhost:8080/login_request", {
 			email: this.email,
 			password: this.password
 		})
 		.then(res => {
-			console.log("Here");
+			console.log(res.data);
 			this.props.set_account(res.data);
 		})
 		.catch(res => {
