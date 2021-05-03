@@ -1,13 +1,18 @@
-import React, { Component } from 'react'
+import React, {
+	Component
+} from "react";
 
 export class Form extends Component {
+	state = {
+		id: "",
+	};
+
 	render() {
 		return (
 			<div>
 				
-			</div>
-		)
+			</div>);
 	}
 }
 
-export default Form
+export default Form;
