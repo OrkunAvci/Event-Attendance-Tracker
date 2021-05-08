@@ -10,6 +10,8 @@ import Login from "./components/layout/Login";
 import Account from "./components/layout/Account";
 import Form from "./components/layout/Form";
 import Redirect from "./components/layout/Redirect";
+import CreateForm from './components/CreateForm';
+import Signup from './components/layout/Signup';
 
 import "./App.css";
 
@@ -80,6 +82,20 @@ class App extends Component {
 							exact={true}
 							path = "/redirect"
 							component = {Redirect}
+						
+						/>
+
+						<Route
+							exact={true}
+							path = "/createForm"
+							component = {CreateForm}
+						
+						/>
+
+						<Route
+							exact={true}
+							path = "/Signup"
+							component = {Signup}
 						
 						/>
 						
