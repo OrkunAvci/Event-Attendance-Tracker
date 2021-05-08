@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-//import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 //import Account from "./Account";
@@ -40,16 +40,15 @@ export class Login extends Component {
 				
 					<label style={labeStyle}>Password</label>
 					<input style={inputStyle} type="password" name="password" onChange={this.update_fields} />
-				
+
+					<Link style={linkStyle} to="/Signup">Don't have an account yet? Sign up here!</Link>
+
 					<button style={buttonStyle} type="submit" onSubmit={this.login_request}>Login to your account</button>
 				</form>
 			</div>
 		)
 	}
 }
-
-//	Props:
-
 
 //	CSS Styling:
 const containerStyle = {
@@ -86,6 +85,14 @@ const inputStyle = {
 	width: "100%",
 	height: "20px",
 	padding: "0px 5px"
+}
+
+const linkStyle = {
+	color: "#bbb",
+	textDecoration: "none",
+	fontSize: "0.9rem",
+	position: "relative",
+	float: "right"
 }
 
 const buttonStyle = {

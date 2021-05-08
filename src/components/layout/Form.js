@@ -23,6 +23,10 @@ export class Form extends Component {
 
 	check = (e) => { this.setState( { [e.target.name]: ((e.target.checked) ? true : false) } ) };
 	
+	submitForm = (e) => {
+		e.prevetDefault();
+	}
+
 	render() {
 		return (
 			<div style={containerStyle}>
@@ -80,7 +84,7 @@ export class Form extends Component {
 
 					<div style={codeStyle} id="codeField">Code will appear here</div>
 
-					<button style={buttonStyle} type="submit">Submit</button>
+					<button style={buttonStyle} type="submit" onSubmit={this.submitForm}>Submit</button>
 				</form>
 
 			</div>
