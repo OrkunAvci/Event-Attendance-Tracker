@@ -68,6 +68,9 @@ class App extends Component {
 							exact={true}
 							path = "/account"
 							component = {Account}
+							props = {
+								this.state.account
+							}
 							
 						/>
 						
