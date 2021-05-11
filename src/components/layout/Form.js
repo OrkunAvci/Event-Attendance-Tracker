@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {Component} from "react";
 
 export class Form extends Component {
@@ -32,14 +33,14 @@ export class Form extends Component {
 			<div style={containerStyle}>
 				<h2 style={headingStyle}>{this.state.eventName}</h2>
 				<form onSubmit={this.submitForm}>
-					<label style={labeStyle}>Name</label>
-					<input style={inputStyle} type="text" name="name" onChange={this.update_fields}/>
-
+					<label style={labeStyle}>Email</label>
+					<input style={inputStyle} type="email" name="email" onChange={this.update_fields}/>
+					
 					<label style={labeStyle}>Surname</label>
 					<input style={inputStyle} type="text" name="surname" onChange={this.update_fields}/>
 
-					<label style={labeStyle}>Email</label>
-					<input style={inputStyle} type="email" name="email" onChange={this.update_fields}/>
+					<label style={labeStyle}>Name</label>
+					<input style={inputStyle} type="text" name="name" onChange={this.update_fields}/>
 
 					<label style={labeStyle}>Number 1</label>
 					<input style={inputStyle} type="number" name="intField1" onChange={this.update_fields}/>
@@ -81,7 +82,7 @@ export class Form extends Component {
 
 					<label style={labeStyle}>Extra Field</label>
 					<textarea style={textareaStyle} name="extraField" onChange={this.update_fields} maxLength="1024" />
-
+					
 					<div style={codeStyle} id="codeField">Code will appear here</div>
 
 					<button style={buttonStyle} type="submit" onSubmit={this.submitForm}>Submit</button>
