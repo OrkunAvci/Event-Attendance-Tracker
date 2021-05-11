@@ -15,7 +15,7 @@ export class Login extends Component {
 		e.preventDefault();
 		
 		//	Make request to backend to get account
-		axios.post("http://localhost:8080/login_request", {
+		axios.post("http://localhost:8080/UserService/login", {
 			email: this.email,
 			password: this.password
 		})
