@@ -1,5 +1,6 @@
+import axios from 'axios';
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 export class Signup extends React.Component {
 
@@ -8,6 +9,26 @@ export class Signup extends React.Component {
 		name: "",
 		surname: "",
 		password: ""
+	}
+
+	signup_request = (e) => {
+		e.preventDefault();
+
+		axios.post("Link to backend", {
+			email: this.state.email,
+			name: this.state.name,
+			surname: this.state.surname,
+			password: this.state.password
+		}).then((res) => {
+			if (true === true)
+			{
+				return <Redirect to="http://localhost:3000/login"/>
+			}
+			else
+			{
+				//Output error.
+			}
+		})
 	}
 
 	render = () => {
@@ -29,7 +50,7 @@ export class Signup extends React.Component {
 
 					<Link style={linkStyle} to="/Login">Already have an account? Login here.</Link>
 				
-					<button style={buttonStyle} type="submit" onSubmit={this.login_request}>Sign up now!</button>
+					<button style={buttonStyle} type="submit" onSubmit={this.signup_request}>Sign up now!</button>
 				</form>
 			</div>
 	)}
