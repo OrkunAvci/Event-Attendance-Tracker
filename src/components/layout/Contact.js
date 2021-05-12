@@ -38,7 +38,7 @@ const containerStyle = {
 	position: "relative",
 	marginTop: "150px",
 	background: "linear-gradient(45deg, rgba(0, 217, 255, 0.536) 0%, rgba(48, 48, 48, 0.79) 15%, rgba(48, 48, 48, 0.79) 85%, rgba(153, 0, 255, 0.6) 100%)",
-	borderRadius: "48px",
+	borderRadius: "48px"
 }
 
 const headingStyle = {

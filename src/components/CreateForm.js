@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios';
 
 export class CreateForm extends React.Component {
 
@@ -26,6 +27,10 @@ export class CreateForm extends React.Component {
 
 	submitForm = (e) => {
 		e.prevetDefault();
+
+		axios.post("http://localhost:8080/EventServise", {
+			
+		})
 	}
 
 	render = () => {
