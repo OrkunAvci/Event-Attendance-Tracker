@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 
 import EventListElement from "./EventListElement";
 
@@ -12,11 +11,3 @@ class EventList extends React.Component {
 }
 
 export default EventList;
-
-/*
-{
-					this.state.list.map((eve)=>{
-						return <EventListElement key={eve.id} event={eve} />
-					})
-				}
-*/
