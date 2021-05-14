@@ -8,6 +8,7 @@ import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
 import Login from "./components/pages/Login";
 import Account from "./components/pages/Account";
+import Event from "./components/pages/Event";
 import Form from "./components/pages/Form";
 import Redirect from "./components/pages/Redirect";
 import CreateForm from './components/CreateForm';
@@ -72,6 +73,13 @@ class App extends Component {
 								this.state.account
 							}
 							
+						/>
+
+						<Route
+							exact={true}
+							path = "/event"
+							component = {Event}
+						
 						/>
 						
 						<Route
