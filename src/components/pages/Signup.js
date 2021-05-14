@@ -20,13 +20,13 @@ export class Signup extends React.Component {
 			surname: this.state.surname,
 			password: this.state.password
 		}).then((res) => {
-			if (true === true)
+			if (!(res.data === undefined  || res.data === null))
 			{
 				return <Redirect to="http://localhost:3000/login"/>
 			}
 			else
 			{
-				//Output error.
+				console.log("Something went wrong. Debug this.");
 			}
 		})
 	}
