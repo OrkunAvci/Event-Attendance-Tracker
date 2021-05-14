@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import Homepage from "./components/layout/Homepage";
-import About from "./components/layout/About";
-import Contact from "./components/layout/Contact";
-import Login from "./components/layout/Login";
-import Account from "./components/layout/Account";
-import Form from "./components/layout/Form";
-import Redirect from "./components/layout/Redirect";
+import Homepage from "./components/pages/Homepage";
+import About from "./components/pages/About";
+import Contact from "./components/pages/Contact";
+import Login from "./components/pages/Login";
+import Account from "./components/pages/Account";
+import Form from "./components/pages/Form";
+import Redirect from "./components/pages/Redirect";
 import CreateForm from './components/CreateForm';
-import Signup from './components/layout/Signup';
+import Signup from './components/pages/Signup';
 
 import "./App.css";
 
