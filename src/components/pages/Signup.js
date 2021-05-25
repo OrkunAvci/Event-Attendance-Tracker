@@ -3,57 +3,92 @@ import React from 'react'
 import { Link, Redirect } from "react-router-dom";
 
 export class Signup extends React.Component {
-
 	state = {
 		email: "",
 		name: "",
 		surname: "",
-		password: ""
-	}
+		password: "",
+	};
 
 	signup_request = (e) => {
 		e.preventDefault();
+		console.log("Got here.");
+		axios
+			.post(
+				"https://cors-anywhere.herokuapp.com/http://192.168.63.1:8080/user/signUp",
+				{
+					email: this.state.email,
+					name: this.state.name,
+					surname: this.state.surname,
+					password: this.state.password,
+				}
+			)
+			.then((res) => {
+				console.log(res.data);
+				if (!(res.data === undefined || res.data === null)) {
+					return <Redirect to="http://localhost:3000/login" />;
+				} else {
+					console.log("Something went wrong. Debug this.");
+				}
+			});
+	};
 
-		axios.post("Link to backend", {
-			email: this.state.email,
-			name: this.state.name,
-			surname: this.state.surname,
-			password: this.state.password
-		}).then((res) => {
-			if (!(res.data === undefined  || res.data === null))
-			{
-				return <Redirect to="http://localhost:3000/login"/>
-			}
-			else
-			{
-				console.log("Something went wrong. Debug this.");
-			}
-		})
-	}
+	update_fields = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+	};
 
 	render = () => {
 		return (
-		<div style={containerStyle}>
+			<div style={containerStyle}>
 				<h2 style={headingStyle}>Enter your credentials</h2>
 				<form onSubmit={this.login_request}>
 					<label style={labeStyle}>Email</label>
-					<input style={inputStyle} type="email" name="email" onChange={this.update_fields} />
+					<input
+						style={inputStyle}
+						type="email"
+						name="email"
+						onChange={this.update_fields}
+					/>
 
 					<label style={labeStyle}>Name</label>
-					<input style={inputStyle} type="text" name="name" onChange={this.update_fields} />
+					<input
+						style={inputStyle}
+						type="text"
+						name="name"
+						onChange={this.update_fields}
+					/>
 
 					<label style={labeStyle}>Surname</label>
-					<input style={inputStyle} type="text" name="surname" onChange={this.update_fields} />
-				
-					<label style={labeStyle}>Password</label>
-					<input style={inputStyle} type="password" name="password" onChange={this.update_fields} />
+					<input
+						style={inputStyle}
+						type="text"
+						name="surname"
+						onChange={this.update_fields}
+					/>
 
-					<Link style={linkStyle} to="/Login">Already have an account? Login here.</Link>
-				
-					<button style={buttonStyle} type="submit" onSubmit={this.signup_request}>Sign up now!</button>
+					<label style={labeStyle}>Password</label>
+					<input
+						style={inputStyle}
+						type="password"
+						name="password"
+						onChange={this.update_fields}
+					/>
+
+					<Link style={linkStyle} to="/Login">
+						Already have an account? Login here.
+					</Link>
+
+					<button
+						style={buttonStyle}
+						type="submit"
+						onClick={this.signup_request}
+					>
+						Sign up now!
+					</button>
 				</form>
 			</div>
-	)}
+		);
+	};
 }
 
 //	CSS Styling:
