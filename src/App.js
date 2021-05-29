@@ -34,7 +34,9 @@ class App extends Component {
 			<Router>
 				<div className = "App">
 					<div className = "container">
-						<Header />
+						<Header 
+							logState={(this.state.account === null) ? false : true}
+						/>
 
 						<Route
 							exact={true}
@@ -105,7 +107,7 @@ class App extends Component {
 
 						<Route
 							exact={true}
-							path = "/Signup"
+							path = "/signup"
 							component = {Signup}
 						
 						/>

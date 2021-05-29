@@ -15,7 +15,7 @@ export class Signup extends React.Component {
 		console.log("Got here.");
 		axios
 			.post(
-				"https://cors-anywhere.herokuapp.com/http://192.168.63.1:8080/user/signUp",
+				"user/signUp",
 				{
 					email: this.state.email,
 					name: this.state.name,
@@ -41,7 +41,7 @@ export class Signup extends React.Component {
 		return (
 			<div style={containerStyle}>
 				<h2 style={headingStyle}>Enter your credentials</h2>
-				<form onSubmit={this.login_request}>
+				<form>
 					<label style={labeStyle}>Email</label>
 					<input
 						style={inputStyle}
@@ -74,7 +74,7 @@ export class Signup extends React.Component {
 						onChange={this.update_fields}
 					/>
 
-					<Link style={linkStyle} to="/Login">
+					<Link style={linkStyle} to="/login">
 						Already have an account? Login here.
 					</Link>
 

@@ -15,7 +15,7 @@ export class Login extends Component {
 		e.preventDefault();
 		
 		//	Make request to backend to get account
-		axios.post("http://localhost:8080/UserService/login", {
+		axios.post("UserService/login", {
 			email: this.email,
 			password: this.password
 		})
@@ -34,16 +34,16 @@ export class Login extends Component {
 		return (
 			<div style={containerStyle}>
 				<h2 style={headingStyle}>Enter your credentials</h2>
-				<form onSubmit={this.login_request}>
+				<form>
 					<label style={labeStyle}>Email</label>
 					<input style={inputStyle} type="email" name="email" onChange={this.update_fields} />
 				
 					<label style={labeStyle}>Password</label>
 					<input style={inputStyle} type="password" name="password" onChange={this.update_fields} />
 
-					<Link style={linkStyle} to="/Signup">Don't have an account yet? Sign up here!</Link>
+					<Link style={linkStyle} to="/signup">Don't have an account yet? Sign up here!</Link>
 
-					<button style={buttonStyle} type="submit" onSubmit={this.login_request}>Login to your account</button>
+					<button style={buttonStyle} type="submit" onClick={this.login_request}>Login to your account</button>
 				</form>
 			</div>
 		)

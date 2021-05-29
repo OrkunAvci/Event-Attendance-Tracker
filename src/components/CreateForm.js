@@ -28,14 +28,14 @@ export class CreateForm extends React.Component {
 	submitForm = (e) => {
 		e.prevetDefault();
 
-		axios.post("http://localhost:8080/EventServise", {
+		axios.post("EventService", {
 			
 		})
 	}
 
 	render = () => {
 		return <div style={containerStyle}>
-			<form onSubmit={this.submitForm}>
+			<form onClick={this.submitForm}>
 				<h2 style={headingStyle}>Select the fields you request from applicants</h2>
 				<div style={checkboxContainerStyle}>
 				<input style={checkboxLabelStyle} type="checkbox" name="checkbox2" onChange={this.check}/>
@@ -82,7 +82,7 @@ export class CreateForm extends React.Component {
 				<label style={checkboxLabelStyle}>Extra Field</label>
 				</div>
 
-				<button style={buttonStyle} type="submit" onSubmit={this.submitForm}>Submit</button>
+				<button style={buttonStyle} type="submit" onClick={this.submitForm}>Submit</button>
 			</form>
 		</div>
 	}
