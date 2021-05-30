@@ -14,9 +14,7 @@ export class Signup extends React.Component {
 		e.preventDefault();
 		console.log("Got here.");
 		axios
-			.post(
-				"user/signUp",
-				{
+			.post("user/signUp", {
 					email: this.state.email,
 					name: this.state.name,
 					surname: this.state.surname,
@@ -24,12 +22,23 @@ export class Signup extends React.Component {
 				}
 			)
 			.then((res) => {
-				console.log(res.data);
-				if (!(res.data === undefined || res.data === null)) {
-					return <Redirect to="http://localhost:3000/login" />;
-				} else {
-					console.log("Something went wrong. Debug this.");
+				
+				let output = document.getElementById("output");
+				
+				if (res.status === 200)
+				{
+					output.setAttribute("value", "Signed up.");
 				}
+				else if (res.status === 500)
+				{
+					output.setAttribute("value", "Account Exists.");
+				}
+				else
+				{
+					console.log(res);
+				}
+
+				this.props.history.push("http://localhost:3000/login");
 			});
 	};
 
@@ -86,6 +95,7 @@ export class Signup extends React.Component {
 						Sign up now!
 					</button>
 				</form>
+				<div id="output"></div>
 			</div>
 		);
 	};
