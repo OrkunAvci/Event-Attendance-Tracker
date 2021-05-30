@@ -15,17 +15,20 @@ export class Login extends Component {
 		e.preventDefault();
 		
 		//	Make request to backend to get account
-		axios.post("UserService/login", {
-			email: this.email,
-			password: this.password
-		})
-		.then(res => {
-			console.log(res.data);
-			this.props.set_account(res.data);
-		})
-		.catch(res => {
-			console.log(e);
-		})
+		axios
+			.post("user/login", {
+				email: this.state.email,
+				password: this.state.password
+			})
+			.then((res) => {
+				console.log(res);
+				this.props.login_request(res.data.id);
+			})
+			.catch((res) => {
+				console.log(e);
+			});
+
+			this.props.history.push("/");
 	};
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };

@@ -38,7 +38,7 @@ export class Signup extends React.Component {
 					console.log(res);
 				}
 
-				this.props.history.push("http://localhost:3000/login");
+				this.props.history.push("/login");
 			});
 	};
 

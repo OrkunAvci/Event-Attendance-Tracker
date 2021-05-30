@@ -19,13 +19,13 @@ import "./App.css";
 class App extends Component {
 
 	state	=	{
-		account: null
+		accountId: null
 	}
 
 	//	Login functions:
-	set_account = (input) => {
+	login_request = (input) => {
 		this.setState({
-			account:input
+			account:input.data.id
 		});
 	}
 
