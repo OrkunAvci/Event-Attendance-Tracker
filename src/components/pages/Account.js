@@ -6,14 +6,16 @@ import EventList from '../EventList';
 export class Account extends Component {
 	
 	state = {
-		user: null,
+		user: this.props.id,
 		list: []
 	}
 	
 	componentWillMount(){
-		axios.get("https://jsonplaceholder.typicode.com/users/1",{})
+		axios.get("/user/getUser",{
+			id: this.state.id
+		})
 		.then((res)=>{
-			console.log(res.data);
+			console.log(res);
 			this.setState({
 				user: res.data
 			})

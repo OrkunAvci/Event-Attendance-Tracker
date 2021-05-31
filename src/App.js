@@ -23,9 +23,9 @@ class App extends Component {
 	}
 
 	//	Login functions:
-	login_request = (input) => {
+	login_request = (id) => {
 		this.setState({
-			account:input.data.id
+			accountId: id
 		});
 	}
 
@@ -35,7 +35,7 @@ class App extends Component {
 				<div className = "App">
 					<div className = "container">
 						<Header 
-							logState={(this.state.account === null) ? false : true}
+							logState={(this.state.accountId !== null)}
 						/>
 
 						<Route
@@ -72,7 +72,7 @@ class App extends Component {
 							path = "/account"
 							component = {Account}
 							props = {
-								this.state.account
+								this.state.accountId
 							}
 							
 						/>
@@ -100,7 +100,7 @@ class App extends Component {
 
 						<Route
 							exact={true}
-							path = "/createForm"
+							path = "/createEvent"
 							component = {CreateForm}
 						
 						/>
