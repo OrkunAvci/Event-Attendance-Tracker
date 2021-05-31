@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import axios from 'axios';
 
-//import Account from "./Account";
-
-export class Login extends Component {
+class Login extends Component {
 	
 	state = {
 		email: "",
@@ -14,7 +12,6 @@ export class Login extends Component {
 	login_request = (e) => {
 		e.preventDefault();
 		
-		//	Make request to backend to get account
 		axios
 			.post("user/login", {
 				email: this.state.email,
@@ -22,13 +19,18 @@ export class Login extends Component {
 			})
 			.then((res) => {
 				console.log(res);
-				this.props.login_request(res.data.id);
 			})
-			.catch((res) => {
-				console.log(e);
-			});
+			.catch(console.error);
 
-			this.props.history.push("/");
+		axios
+			.get(`user/getUserId?email=${this.state.email}`)
+			.then((res) => {
+				console.log(res);
+				this.props.set_id(res.data);
+			})
+			.catch(console.error);
+
+		this.props.history.push("/account", {});
 	};
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
@@ -108,4 +110,4 @@ const buttonStyle = {
 	left: "auto"
 }
 
-export default Login
+export default withRouter(Login);

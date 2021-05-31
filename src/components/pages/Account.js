@@ -6,14 +6,12 @@ import EventList from '../EventList';
 export class Account extends Component {
 	
 	state = {
-		user: this.props.id,
+		user: null,
 		list: []
 	}
 	
 	componentWillMount(){
-		axios.get("/user/getUser",{
-			id: this.state.id
-		})
+		axios.get(`/user/getUser?id=${this.props.id}`)
 		.then((res)=>{
 			console.log(res);
 			this.setState({
@@ -22,7 +20,7 @@ export class Account extends Component {
 		})
 		.catch(console.error);
 
-		axios.get("https://jsonplaceholder.typicode.com/posts?_limit=10", {})
+		axios.get(`/event/getEventByName?name=Random`)
 		.then((res)=>{
 			console.log(res.data)
 			this.setState({
@@ -39,7 +37,12 @@ export class Account extends Component {
 		return (
 			<div>
 				<div style={userStyle}>
-					<h2>User info goes here</h2>
+					{
+						(this.state.user === null) ?
+						"":
+						<h2>{this.state.user.name} {this.state.user.surname}</h2>
+					}
+
 				</div>
 				<div style={eventContainerStyle}>
 					<ul>

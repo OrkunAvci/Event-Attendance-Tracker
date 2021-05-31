@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 export class Header extends React.Component {
 
 	state = {
-		logState: this.props.logState
+		logState: false
+	}
+
+	componentDidMount(){
+		this.setState({
+			logState: this.props.logState
+		});
 	}
 
 	render () {
@@ -12,7 +18,7 @@ export class Header extends React.Component {
 			<header style={headerStyle}>
 	  			<Link to="/"><h2 style={brandStyle}>The Watcher</h2></Link>
 	  			<Link style={linkStyle} to="/">Homepage</Link>
-				<Link style={linkStyle} to="/event">Events</Link>
+				<Link style={linkStyle} to="/events">Events</Link>
 				<Link style={linkStyle} to="/about">About</Link>
 				<Link style={linkStyle} to="/contact">Contact Us</Link>
 				{(this.state.logState === false) ? <Link style={loginStyle} to="/login">Login</Link> : <Link style={loginStyle} to="/account">Account</Link>}
