@@ -11,7 +11,7 @@ class EventListElement extends React.Component {
 		return (
 			<li style={liStyle}>
 				<Link to={this.state.eventLink} style={linkStyle}>
-					{this.state.event.title}
+					{this.state.event.name}
 				</Link>
 				<p style={pStyle}>{this.state.event.body}</p>
 			</li>
