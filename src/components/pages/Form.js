@@ -3,8 +3,8 @@ import React, {Component} from "react";
 
 export class Form extends Component {
 	state = {
-		id: "",
-		eventName: "Event name goes here",
+		id: 0,
+		eventName: "",
 		fields: [],
 		name: "",
 		surname: "",
@@ -15,8 +15,6 @@ export class Form extends Component {
 		checkbox1: false,
 		checkbox2: false,
 		checkbox3: false,
-		checkbox4: false,
-		checkbox5: false,
 		extraField: ""
 	};
 

@@ -4,9 +4,11 @@ import EventListElement from "./EventListElement";
 
 class EventList extends React.Component {
 	render = () => {
-		return this.props.list.map((eve)=>{
-			return <EventListElement key={eve.id} event={eve} />
-		})
+		return this.props.list === null
+			? ""
+			: this.props.list.map((eve) => {
+					return <EventListElement key={eve.id} event={eve} />;
+			  });
 	};
 }
 
