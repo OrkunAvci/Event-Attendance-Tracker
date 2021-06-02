@@ -10,7 +10,13 @@ export class Account extends Component {
 		list: []
 	}
 	
-	componentWillMount(){
+	componentDidMount(){
+
+		if (this.props.id === null)
+		{
+			return;
+		}
+
 		axios.get(`/user/getUser?id=${this.props.id}`)
 		.then((res)=>{
 			console.log(res);

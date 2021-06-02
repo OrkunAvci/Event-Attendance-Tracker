@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 class EventListElement extends React.Component {
 	state = {
 		event: this.props.event,
-		eventLink: `/event/${this.props.event.id}`
+		eventLink: `/event?id=${this.props.event.id}`
 	};
 
 	render = () => {
@@ -33,12 +33,13 @@ const liStyle = {
 	borderRadius: "48px",
 	color: "white",
 	lineSpacing: "30px",
-	fontSize: "1.2rem",
+	fontSize: "1.2rem"
 };
 
 const linkStyle = {
-
-}
+	textDecoration: "none",
+	color: "white"
+};
 
 const pStyle = {
 	textAlign: "left",

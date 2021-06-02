@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Header from "./components/layout/Header";
@@ -10,6 +9,7 @@ import Contact from "./components/pages/Contact";
 import Login from "./components/pages/Login";
 import Account from "./components/pages/Account";
 import Events from "./components/pages/Events";
+import Event from "./components/pages/Event";
 import Form from "./components/pages/Form";
 import Redirect from "./components/pages/Redirect";
 import CreateForm from './components/CreateForm';
@@ -34,7 +34,10 @@ class App extends Component {
 			<Router>
 				<div className="App">
 					<div className="container">
-						<Header logState={this.state.accountId !== null ? true : false} />
+						<Header
+							logState={this.state.accountId !== null ? true : false}
+							updateLogState={(childFunc) => (this.updateLogState = childFunc)}
+						/>
 
 						<Route exact={true} path="/" component={Homepage} />
 
@@ -51,6 +54,8 @@ class App extends Component {
 						</Route>
 
 						<Route exact={true} path="/events" component={Events} />
+
+						<Route exact={true} path="/event" component={Event} />
 
 						<Route exact={true} path="/form" component={Form} />
 

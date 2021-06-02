@@ -1,19 +1,37 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
+import axios from "axios";
+import query from 'query-string'
 
-class Event extends React.Component {
+class Event extends Component {
 	state = {
-		eventId: 0,
-		event: null,
-		fromLink: `#`,
-		redirectionLink: `#`
+		event: null
 	};
+
+	componentDidMount(){
+
+		const values = query.parse(this.props.location.search);
+		console.log(values.id);
+
+
+		axios
+			.get(`/event/getEventById?id=${values.id}`)
+			.then((res) => {
+				this.setState({
+					event: res.data
+				});
+				console.log(this.state.event);
+			})
+			.catch(console.error);
+		
+		
+	}
 
 	render = () => {
 		return (
 			<div style={eventContainerStyle}>
 				<div style={infoStyle}>
-					<h2 style={{ marginBottom: "10px" }}>Event Name</h2>
+					<h2 style={{ marginBottom: "10px" }}>{(this.state.event) ? this.state.event.name : ""}</h2>
 					<p style={{ textAlign: "left" }}>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad non
 						delectus voluptatibus tenetur, deserunt molestias quos fugiat
@@ -29,12 +47,12 @@ class Event extends React.Component {
 					</p>
 				</div>
 				<button style={buttonStyle}>
-					<Link to={this.state.formLink} style={{ color: "white" }}>
+					<Link to={(this.state.formLink) ? this.state.formLink : "#"} style={{ color: "white" }}>
 						Form Page
 					</Link>
 				</button>
 				<button style={buttonStyle}>
-					<Link to={this.state.redirectionLink} style={{ color: "white" }}>
+					<Link to={(this.state.redirectionLink) ? this.state.redirectionLink : ""} style={{ color: "white" }}>
 						Redirection Page
 					</Link>
 				</button>
@@ -83,4 +101,4 @@ const buttonStyle = {
 		"linear-gradient(45deg, rgba(0, 217, 255, 0.536) 0%, rgba(98, 98, 98, 0.79) 35%, rgba(98, 98, 98, 0.79) 65%, rgba(153, 0, 255, 0.6) 100%)",
 };
 
-export default Event;
+export default withRouter(Event);

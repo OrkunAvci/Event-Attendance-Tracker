@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from 'axios';
 
 class Login extends Component {
