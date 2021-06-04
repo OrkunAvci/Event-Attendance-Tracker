@@ -1,10 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, {Component} from "react";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
+import query from "query-string";
 
 export class Form extends Component {
 	state = {
-		id: 0,
-		eventName: "",
+		id: null,
+		event: null,
+		form: null,
 		fields: [],
 		name: "",
 		surname: "",
@@ -18,6 +22,39 @@ export class Form extends Component {
 		extraField: ""
 	};
 
+	async componentDidMount(){
+		if (!(this.state.id === null || this.state.id === undefined)) {return;}
+
+		let values = query.parse(this.props.location.search);
+		console.log(values.id);
+		this.setState({
+			id: values.id
+		});
+
+		await axios
+			.get(`/event/getEventById?id=${values.id}`)
+			.then((res) => {
+				this.setState({
+					event: res.data
+				});
+				console.log(this.state.event);
+			})
+			.catch(console.error);
+		
+		console.log(this.state.event.formUrl);
+
+		await axios
+			.get(`/event/getForm?id=${parseInt(values.id)}`)
+			.then((res) => {
+				this.setState({
+					form: res.data,
+				});
+				console.log(this.state.form);
+			})
+			.catch(console.error);
+		
+	}
+
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
 
 	check = (e) => { this.setState( { [e.target.name]: ((e.target.checked) ? true : false) } ) };
@@ -29,8 +66,8 @@ export class Form extends Component {
 	render() {
 		return (
 			<div style={containerStyle}>
-				<h2 style={headingStyle}>{this.state.eventName}</h2>
-				<form onClick={this.submitForm}>
+				<h2 style={headingStyle}>{(this.state.event === null) ? "" : this.state.event.name}</h2>
+				<form>
 					<label style={labeStyle}>Email</label>
 					<input style={inputStyle} type="email" name="email" onChange={this.update_fields}/>
 					
@@ -185,4 +222,4 @@ const buttonStyle = {
 	left: "auto",
 }
 
-export default Form;
+export default withRouter(Form);

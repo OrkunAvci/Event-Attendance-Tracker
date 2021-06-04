@@ -47,12 +47,12 @@ class Event extends Component {
 					</p>
 				</div>
 				<button style={buttonStyle}>
-					<Link to={(this.state.formLink) ? this.state.formLink : "#"} style={{ color: "white" }}>
+					<Link to={(this.state.formLink) ? this.state.formLink : (this.state.event !== null) ? `/form?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
 						Form Page
 					</Link>
 				</button>
 				<button style={buttonStyle}>
-					<Link to={(this.state.redirectionLink) ? this.state.redirectionLink : ""} style={{ color: "white" }}>
+					<Link to={(this.state.redirectionLink) ? this.state.redirectionLink : (this.state.event !== null) ? `/redirection?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
 						Redirection Page
 					</Link>
 				</button>
