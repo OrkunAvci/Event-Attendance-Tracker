@@ -27,10 +27,9 @@ class Login extends Component {
 			.then((res) => {
 				console.log(res);
 				this.props.set_id(res.data);
+				this.props.history.push(`/account?id=${res.data}`);
 			})
 			.catch(console.error);
-
-		this.props.history.push("/account", {});
 	};
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
