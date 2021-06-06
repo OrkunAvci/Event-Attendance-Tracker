@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import axios from 'axios';
+import { withRouter } from "react-router-dom";
+import query from "query-string";
 
 import EventList from '../EventList';
 export class Account extends Component {
@@ -17,7 +19,13 @@ export class Account extends Component {
 			return;
 		}
 
-		axios.get(`/user/getUser?id=${this.props.id}`)
+		let values = query.parse(this.props.location.search);
+		console.log(values.id);
+		this.setState({
+			id: values.id,
+		});
+
+		axios.get(`/user/getUser?id=${values.id}`)
 		.then((res)=>{
 			console.log(res);
 			this.setState({
@@ -26,7 +34,7 @@ export class Account extends Component {
 		})
 		.catch(console.error);
 
-		axios.get(`/event/getEventByName?name=Random`)
+		axios.get(`/event/getEventByName?name=Event`)
 		.then((res)=>{
 			console.log(res.data)
 			this.setState({
@@ -36,6 +44,7 @@ export class Account extends Component {
 		.catch((err)=>{
 			console.error(err);
 		})
+
 	}
 
 	render() {
@@ -78,4 +87,4 @@ const userStyle = {
 const eventContainerStyle = {
 }
 
-export default Account
+export default withRouter(Account);
