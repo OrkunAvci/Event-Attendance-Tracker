@@ -24,88 +24,44 @@ class CreateEvent extends React.Component {
 	create_event = (e) => {
 		e.preventDefault();
 
-		console.log({event: {
-			id: null,
-			name: this.state.name,
-			creationDate: null,
-			formDate: this.state.registerDate,
-			eventUrl: this.state.eventLink,
-			formUrl: null,
-			redirectUrl: null,
-			form: {
-				id: null,
-				event: null,
-				formField: {
-					intField1: (this.state.intField1 !== ""),
-					intField2: (this.state.intField2 !== ""),
-					strField1: (this.state.strField1 !== ""),
-					strField2: (this.state.strField2 !== ""),
-					strField3: (this.state.strField3 !== ""),
-					chkField1: (this.state.chkField1 !== ""),
-					chkField2: (this.state.chkField2 !== ""),
-					chkField3: (this.state.chkField3 !== ""),
-				},
-				formLabel: {
-					intField1: this.state.intField1,
-					intField2: this.state.intField2,
-					strField1: this.state.strField1,
-					strField2: this.state.strField2,
-					strField3: this.state.strField3,
-					chkField1: this.state.chkField1,
-					chkField2: this.state.chkField2,
-					chkField3: this.state.chkField3,
-				}
-			},
-			user: this.state.accountId
-		}});
-
-
 		axios
 			.post("event/createEvent", {
-				event: {
-					id: 0,
-					name: this.state.name,
-					creationDate: null,
-					formDate: this.state.registerDate,
-					eventUrl: this.state.eventLink,
-					formUrl: "",
-					redirectUrl: "",
-					form: {
-						id: 0,
-						event: null,
-						formField: {
-							intField1: (this.state.intField1 !== ""),
-							intField2: (this.state.intField2 !== ""),
-							strField1: (this.state.strField1 !== ""),
-							strField2: (this.state.strField2 !== ""),
-							strField3: (this.state.strField3 !== ""),
-							chkField1: (this.state.chkField1 !== ""),
-							chkField2: (this.state.chkField2 !== ""),
-							chkField3: (this.state.chkField3 !== ""),
-						},
-						formLabel: {
-							intField1: this.state.intField1,
-							intField2: this.state.intField2,
-							strField1: this.state.strField1,
-							strField2: this.state.strField2,
-							strField3: this.state.strField3,
-							chkField1: this.state.chkField1,
-							chkField2: this.state.chkField2,
-							chkField3: this.state.chkField3,
-						}
-					}
-				}
+				name: this.state.name,
+				formDate: this.state.registerDate,
+				eventUrl: this.state.eventLink,
+				formUrl: "",
+				redirectUrl: "",
+				form: {
+					formField: {
+						intField1: this.state.intField1 !== "",
+						intField2: this.state.intField2 !== "",
+						strField1: this.state.strField1 !== "",
+						strField2: this.state.strField2 !== "",
+						strField3: this.state.strField3 !== "",
+						chkField1: this.state.chkField1 !== "",
+						chkField2: this.state.chkField2 !== "",
+						chkField3: this.state.chkField3 !== "",
+					},
+					formLabel: {
+						intField1: this.state.intField1,
+						intField2: this.state.intField2,
+						strField1: this.state.strField1,
+						strField2: this.state.strField2,
+						strField3: this.state.strField3,
+						chkField1: this.state.chkField1,
+						chkField2: this.state.chkField2,
+						chkField3: this.state.chkField3,
+					},
+				},
 			})
-			.then((res)=>{
-				if (res.status === 200)
-				{
+			.then((res) => {
+				if (res.status === 200) {
 					console.log("We good.");
-				}
-				else
-				{
+				} else {
 					console.log(res);
 				}
 			})
+			.catch(console.error);
 	}
 
 	render() {
