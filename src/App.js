@@ -12,7 +12,7 @@ import Events from "./components/pages/Events";
 import Event from "./components/pages/Event";
 import Form from "./components/pages/Form";
 import Redirect from "./components/pages/Redirect";
-import CreateForm from './components/CreateForm';
+import CreateEvent from "./components/pages/CreateEvent";
 import Signup from './components/pages/Signup';
 
 import "./App.css";
@@ -20,7 +20,7 @@ import "./App.css";
 class App extends Component {
 
 	state	=	{
-		accountId: null
+		accountId: 0
 	}
 
 	set_id = (id) => {
@@ -35,7 +35,7 @@ class App extends Component {
 				<div className="App">
 					<div className="container">
 						<Header
-							logState={this.state.accountId !== null ? true : false}
+							logState={this.state.accountId !== 0 ? true : false}
 							updateLogState={(childFunc) => (this.updateLogState = childFunc)}
 						/>
 
@@ -61,7 +61,9 @@ class App extends Component {
 
 						<Route exact={true} path="/redirect" component={Redirect} />
 
-						<Route exact={true} path="/createEvent" component={CreateForm} />
+						<Route exact={true} path="/createEvent">
+							<CreateEvent accountId={this.state.accountId} />
+						</Route>
 
 						<Route exact={true} path="/signup" component={Signup} />
 

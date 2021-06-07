@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export class Header extends React.Component {
 
 	state = {
-		logState: this.props.logState
+		logState: false
 	}
 
 	componentDidMount(){

@@ -34,7 +34,7 @@ export class Account extends Component {
 		})
 		.catch(console.error);
 
-		axios.get(`/event/getEventByName?name=Event`)
+		axios.get(`/event/getEventByName?name=Random`)
 		.then((res)=>{
 			console.log(res.data)
 			this.setState({

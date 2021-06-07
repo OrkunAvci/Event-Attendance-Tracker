@@ -7,11 +7,16 @@ class Events extends React.Component {
 	
 	state = {
 		eventName: "",
-		list: []
+		list: [],
+		searched: false
 	}
 
 	search_events= (e) => {
 		e.preventDefault();
+
+		this.setState({
+			searched: true
+		});
 
 		axios
 			.get(`/event/getEventByName?name=${this.state.eventName}`)
@@ -38,7 +43,11 @@ class Events extends React.Component {
 						<button type="submit" style={buttonStyle} onClick={this.search_events}>Search</button>
 					</form>
 				</div>
-				<EventList list={this.state.list}/>
+				{
+					(this.state.searched ===true && (!Array.isArray(this.state.list) || this.state.list.length === 0)) ? 
+					<div style={errorStyle}>No events with the name.</div> :
+					<EventList list={this.state.list}/>
+				}
 			</div>
 		)
 	}
@@ -57,7 +66,8 @@ const searchContainerStyle = {
 	background:
 		"linear-gradient(45deg, rgba(0, 217, 255, 0.436) 0%, rgb(48, 48, 48, 0.79) 20%, rgba(48, 48, 48, 0.79) 80%, rgba(153, 0, 255, 0.5) 100%)",
 	borderRadius: "48px",
-	textAlign: "middle"
+	textAlign: "middle",
+	color: "white"
 };
 
 const searchStyle = {
@@ -65,7 +75,7 @@ const searchStyle = {
 	width: "480px",
 	margin: "20px",
 	marginLeft: "100px",
-	textAlign: "middle"
+	textAlign: "middle",
 };
 
 const buttonStyle = {
@@ -76,6 +86,23 @@ const buttonStyle = {
 	marginBottom: "20px",
 	position: "relative",
 	left: "auto",
+};
+
+const errorStyle = {
+	color: "red",
+	width: "1280px",
+	height: "auto",
+	margin: "auto",
+	padding: "40px 70px",
+	boxSizing: "border-box",
+	display: "block",
+	position: "relative",
+	marginTop: "20px",
+	background:
+		"linear-gradient(45deg, rgba(0, 217, 255, 0.536) 0%, rgba(48, 48, 48, 0.79) 8%, rgba(48, 48, 48, 0.79) 92%, rgba(153, 0, 255, 0.6) 100%)",
+	borderRadius: "48px",
+	lineSpacing: "30px",
+	fontSize: "1.3rem",
 };
 
 export default Events;
