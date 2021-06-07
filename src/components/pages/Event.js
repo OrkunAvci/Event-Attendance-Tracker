@@ -32,19 +32,12 @@ class Event extends Component {
 			<div style={eventContainerStyle}>
 				<div style={infoStyle}>
 					<h2 style={{ marginBottom: "10px" }}>{(this.state.event) ? this.state.event.name : ""}</h2>
-					<p style={{ textAlign: "left" }}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad non
-						delectus voluptatibus tenetur, deserunt molestias quos fugiat
-						assumenda et incidunt est obcaecati natus omnis optio soluta odio at
-						quam architecto. Harum, beatae, repellat cum incidunt corrupti animi
-						facere asperiores, a ut atque quia blanditiis. Sint eos nemo rerum
-						quia! Ratione reprehenderit, laudantium assumenda repudiandae
-						commodi exercitationem doloribus earum officia error aperiam nam,
-						mollitia eligendi odit dolorum in ducimus labore nulla! Illum dicta
-						odit quis quo vero, qui id quam rerum velit aut? Dolore alias
-						molestias quia cum quod? Quas alias consequuntur cupiditate minima
-						nam vel ipsum mollitia quis earum molestias!
-					</p>
+					{
+						(this.state.event !== null) ? 
+						<p style={{ textAlign: "left" }}>
+							Can register before {this.state.event.formDate}.
+						</p> : ""
+					}
 				</div>
 				<button style={buttonStyle}>
 					<Link to={(this.state.formLink) ? this.state.formLink : (this.state.event !== null) ? `/form?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
@@ -52,7 +45,7 @@ class Event extends Component {
 					</Link>
 				</button>
 				<button style={buttonStyle}>
-					<Link to={(this.state.redirectionLink) ? this.state.redirectionLink : (this.state.event !== null) ? `/redirection?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
+					<Link to={(this.state.redirectionLink) ? this.state.redirectionLink : (this.state.event !== null) ? `/redirect?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
 						Redirection Page
 					</Link>
 				</button>
@@ -62,7 +55,7 @@ class Event extends Component {
 }
 
 const eventContainerStyle = {
-	height: "400px",
+	height: "auto",
 	width: "1440px",
 	margin: "auto",
 	padding: "40px 70px",
@@ -91,6 +84,7 @@ const buttonStyle = {
 	width: "350px",
 	height: "54px",
 	margin: "70px 120px",
+	marginBottom: "40px",
 	padding: "auto",
 	border: "none",
 	boxShadow: "2px 3px rgba(28, 28, 28, 0.49)",
