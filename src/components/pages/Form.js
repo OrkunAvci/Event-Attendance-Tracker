@@ -9,24 +9,27 @@ export class Form extends Component {
 		id: null,
 		event: null,
 		form: null,
-		fields: [],
-		name: "",
-		surname: "",
 		email: "",
 		intField1: 0,
 		intField2: 0,
-		intField3: 0,
-		checkbox1: false,
-		checkbox2: false,
-		checkbox3: false,
-		extraField: ""
+		strField1: "",
+		strField2: "",
+		strField3: "",
+		chkField1: false,
+		chkField2: false,
+		chkField3: false,
+		output: ""
 	};
 
 	async componentDidMount(){
 		if (!(this.state.id === null || this.state.id === undefined)) {return;}
 
 		let values = query.parse(this.props.location.search);
-		console.log(values.id);
+		if (values.id === undefined)
+		{
+			console.log("Id is undefined.");
+			return;
+		}
 		this.setState({
 			id: values.id
 		});
@@ -40,11 +43,9 @@ export class Form extends Component {
 				console.log(this.state.event);
 			})
 			.catch(console.error);
-		
-		console.log(this.state.event.formUrl);
 
 		await axios
-			.get(`/event/getForm?id=${parseInt(values.id)}`)
+			.get(`/event/getForm?id=${values.id}`)
 			.then((res) => {
 				this.setState({
 					form: res.data,
@@ -59,8 +60,31 @@ export class Form extends Component {
 
 	check = (e) => { this.setState( { [e.target.name]: ((e.target.checked) ? true : false) } ) };
 	
-	submitForm = (e) => {
+	register = (e) => {
 		e.prevetDefault();
+
+		axios.post("registration/createRegistration", {
+			email: this.state.email,
+			intField1: (this.state.form.formField.intField1) ? parseInt(this.state.intField1) : 0,
+			intField2: (this.state.form.formField.intField2) ? parseInt(this.state.intField2) : 0,
+			strField1: (this.state.form.formField.strField1) ? this.state.strField1 : "",
+			strField2: (this.state.form.formField.strField2) ? this.state.strField2 : "",
+			strField3: (this.state.form.formField.strField3) ? this.state.strField3 : "",
+			chkField1: (this.state.form.formField.chkField1) ? this.state.chkField1 : false,
+			chkField2: (this.state.form.formField.chkField2) ? this.state.chkField2 : false,
+			chkField3: (this.state.form.formField.chkField3) ? this.state.chkField3 : false
+		})
+		.then((res) => {
+			if (res.status === 200)
+			{
+				//	Register is successful
+			}
+			else
+			{
+				console.log(res);
+			}
+		})
+		.catch(console.error);
 	}
 
 	render() {
@@ -71,58 +95,74 @@ export class Form extends Component {
 					<label style={labeStyle}>Email</label>
 					<input style={inputStyle} type="email" name="email" onChange={this.update_fields}/>
 					
-					<label style={labeStyle}>Surname</label>
-					<input style={inputStyle} type="text" name="surname" onChange={this.update_fields}/>
+					{
+						(this.state.form !== null && this.state.form.formField.strField1) ?
+						<div>
+							<label style={labeStyle}>{this.state.form.formLabel.strField1}</label>
+							<input style={inputStyle} type="text" name="strField1" onChange={this.update_fields}/>
+						</div> : ""
+					}
 
-					<label style={labeStyle}>Name</label>
-					<input style={inputStyle} type="text" name="name" onChange={this.update_fields}/>
+					{
+						(this.state.form !== null && this.state.form.formField.strField2) ?
+						<div>
+							<label style={labeStyle}>{this.state.form.formLabel.strField2}</label>
+							<input style={inputStyle} type="text" name="strField2" onChange={this.update_fields}/>
+						</div> : ""
+					}
 
-					<label style={labeStyle}>Number 1</label>
-					<input style={inputStyle} type="number" name="intField1" onChange={this.update_fields}/>
+					{
+						(this.state.form !== null && this.state.form.formField.strField3) ?
+						<div>
+							<label style={labeStyle}>{this.state.form.formLabel.strField3}</label>
+							<input style={inputStyle} type="text" name="strField3" onChange={this.update_fields}/>
+						</div> : ""
+					}
 
-					<label style={labeStyle}>Number 2</label>
-					<input style={inputStyle} type="number" name="intField2" onChange={this.update_fields}/>
+					{
+						(this.state.form !== null && this.state.form.formField.intField1) ?
+						<div>
+							<label style={labeStyle}>{this.state.form.formLabel.intField1}</label>
+							<input style={inputStyle} type="number" name="intField1" onChange={this.update_fields}/>
+						</div> : ""
+					}
 
-					<label style={labeStyle}>Number 3</label>
-					<input style={inputStyle} type="number" name="intField3" onChange={this.update_fields}/>
+					{
+						(this.state.form !== null && this.state.form.formField.intField2) ?
+						<div>
+							<label style={labeStyle}>{this.state.form.formLabel.intField1}</label>
+							<input style={inputStyle} type="number" name="intField2" onChange={this.update_fields}/>
+						</div> : ""
+					}
 
-					<label style={labeStyle}>Checkbox Quesion</label>
+					{
+						(this.state.form !== null && this.state.form.formField.chkField1) ?
+						<div style={checkboxContainerStyle}>
+						<input style={checkboxLabelStyle} type="checkbox" name="chkField1" onChange={this.check}/>
+						<label style={checkboxLabelStyle}>{this.state.form.formLabel.chkField1}</label>
+						</div> : ""
+					}
+
+					{
+						(this.state.form !== null && this.state.form.formField.chkField2) ?
+						<div style={checkboxContainerStyle}>
+						<input style={checkboxLabelStyle} type="checkbox" name="chkField2" onChange={this.check}/>
+						<label style={checkboxLabelStyle}>{this.state.form.formLabel.chkField2}</label>
+						</div> : ""
+					}
+
+					{
+						(this.state.form !== null && this.state.form.formField.chkField3) ?
+						<div style={checkboxContainerStyle}>
+						<input style={checkboxLabelStyle} type="checkbox" name="chkField3" onChange={this.check}/>
+						<label style={checkboxLabelStyle}>{this.state.form.formLabel.chkField3}</label>
+						</div> : ""
+					}
 					
-					<div style={checkboxContainerStyle}>
-					<input style={checkboxLabelStyle} type="checkbox" name="checkbox1" onChange={this.check}/>
-					<label style={checkboxLabelStyle}>Checkbox Option</label>
-					</div>
+					<div style={outputStyle} value={this.state.output} id="codeField"></div>
 
-					<div style={checkboxContainerStyle}>
-					<input style={checkboxLabelStyle} type="checkbox" name="checkbox2" onChange={this.check}/>
-					<label style={checkboxLabelStyle}>Checkbox Option</label>
-					</div>
-
-					<div style={checkboxContainerStyle}>
-					<input style={checkboxLabelStyle} type="checkbox" name="checkbox3" onChange={this.check}/>
-					<label style={checkboxLabelStyle}>Checkbox Option</label>
-					</div>
-
-					<div style={checkboxContainerStyle}>
-					<input style={checkboxLabelStyle} type="checkbox" name="checkbox4" onChange={this.check}/>
-					<label style={checkboxLabelStyle}>Checkbox Option</label>
-					</div>
-
-					<div style={checkboxContainerStyle}>
-					<input style={checkboxLabelStyle} type="checkbox" name="checkbox5" onChange={this.check}/>
-					<label style={checkboxLabelStyle}>Checkbox Option</label>
-					</div>
-					
-					<div style={whiteSpace}></div>
-
-					<label style={labeStyle}>Extra Field</label>
-					<textarea style={textareaStyle} name="extraField" onChange={this.update_fields} maxLength="1024" />
-					
-					<div style={codeStyle} id="codeField">Code will appear here</div>
-
-					<button style={buttonStyle} type="submit" onClick={this.submitForm}>Submit</button>
+					<button style={buttonStyle} type="submit" onClick={this.register}>Register</button>
 				</form>
-
 			</div>
 		);
 	}
@@ -203,7 +243,7 @@ const textareaStyle = {
 	resize: "none"
 }
 
-const codeStyle = {
+const outputStyle = {
 	display : "block",
 	color: "rgba(255, 103, 108, 1)",
 	textAlign: "middle"
