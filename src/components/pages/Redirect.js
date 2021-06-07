@@ -1,28 +1,41 @@
 import axios from 'axios';
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import query from "query-string";
 
 export class Redirect extends Component {
 
 	state = {
+		id: null,
 		email: "",
-		code: ""
+		code: "",
+		output: ""
+	}
+
+	componentDidMount() {
+		if (!(this.state.id === null || this.state.id === undefined)) {return;}
+
+		let values = query.parse(this.props.location.search);
+		this.setState({
+			id: values.id
+		});
 	}
 
 	submit_code = (e) => {
 		e.preventDefault();
 
 		//	Check with database
-		axios.post("Link To Backend", {
-			email: this.email,
-			code: this.code
-		})
-		.then(res => {
-			console.log("Here");
-			this.props.set_account(res.data);
-		})
-		.catch(res => {
-			console.log(e);
-		})
+		axios
+			.post(`registration/validateCode?email=${this.state.email}&code=${this.state.code}`)
+			.then((res) => {
+				if (res.status === 200)
+				{
+					//	Send them off
+				}
+				else
+				{
+
+				}
+			})
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
@@ -37,6 +50,8 @@ export class Redirect extends Component {
 				
 					<label style={labeStyle}>Code</label>
 					<input style={inputStyle} type="text" name="code" onChange={this.update_fields} />
+
+					<div style={outputStyle} value={this.state.output} id="codeField"></div>
 				
 					<button style={buttonStyle} type="submit" onSubmit={this.submit_code}>Enter the event</button>
 				</form>
@@ -80,6 +95,12 @@ const inputStyle = {
 	width: "100%",
 	height: "20px",
 	padding: "0px 5px"
+}
+
+const outputStyle = {
+	display : "block",
+	color: "rgba(255, 103, 108, 1)",
+	textAlign: "middle"
 }
 
 const buttonStyle = {
