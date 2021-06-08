@@ -1,17 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 export class Header extends React.Component {
 
 	state = {
-		logState: false
+		id: this.props.id,
+		accountLink: `/account?id=${this.props.id}`
 	}
 
-	componentDidMount(){
-		this.setState({
-			logState: this.props.logState,
-		});
-		this.forceUpdate();
+	shouldComponentUpdate(newProps){
+		return newProps.id !== this.state.id;
 	}
 
 	render () {
@@ -22,11 +21,17 @@ export class Header extends React.Component {
 				<Link style={linkStyle} to="/events">Events</Link>
 				<Link style={linkStyle} to="/about">About</Link>
 				<Link style={linkStyle} to="/contact">Contact Us</Link>
-				{(this.state.logState === false) ? <Link style={loginStyle} to="/login">Login</Link> : <Link style={loginStyle} to="/account">Account</Link>}
+				{(this.props.id === 0) ? <Link style={loginStyle} to="/login">Login</Link> : <Link style={loginStyle} to={this.state.accountLink}>Account</Link>}
 			</header>
   )};
 }
 
+//	Props:
+Header.propTypes = {
+	id: PropTypes.number.isRequired
+};
+
+//	CSS:
 const headerStyle = {
 	background: "linear-gradient(90deg, rgba(0, 217, 255, 0.836) 0%, rgb(153, 0, 255) 100%)",
 	color: "white",

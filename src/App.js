@@ -35,8 +35,7 @@ class App extends Component {
 				<div className="App">
 					<div className="container">
 						<Header
-							logState={this.state.accountId !== 0 ? true : false}
-							updateLogState={(childFunc) => (this.updateLogState = childFunc)}
+							id={this.state.accountId}
 						/>
 
 						<Route exact={true} path="/" component={Homepage} />
