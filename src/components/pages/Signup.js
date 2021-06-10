@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react'
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export class Signup extends React.Component {
 	state = {
