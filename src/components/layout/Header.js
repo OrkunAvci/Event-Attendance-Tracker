@@ -1,16 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
+import axios from "axios";
 
 export class Header extends React.Component {
 
 	state = {
 		id: this.props.id,
-		accountLink: `/account?id=${this.props.id}`
+		org: null,
+		accountLink: `/account?id=${this.props.id}`,
+		flag: false
 	}
 
 	shouldComponentUpdate(newProps){
-		return newProps.id !== this.state.id;
+		return newProps.id !== this.state.id || (this.state.org !== null && this.state.flag === false);
+	}
+
+	componentDidUpdate(){
+		if (this.state.org === null)
+		{
+			axios.get(`user/isOrganizer?id=${this.state.id}`)
+			.then((res) => {
+				this.setState({
+					org: res.data
+				});
+			})
+			.catch(console.error);
+		}
+		else
+		{
+			this.setState({
+				flag: true
+			});
+		}
+		this.setState({
+			id: this.props.id,
+			accountLink: `/account?id=${this.props.id}`
+		});
 	}
 
 	render () {
@@ -22,6 +48,7 @@ export class Header extends React.Component {
 				<Link style={linkStyle} to="/about">About</Link>
 				<Link style={linkStyle} to="/contact">Contact Us</Link>
 				{(this.props.id === 0) ? <Link style={loginStyle} to="/login">Login</Link> : <Link style={loginStyle} to={this.state.accountLink}>Account</Link>}
+				{(this.state.org === true) ? <Link style={loginStyle} to="/createEvent">Create Event</Link> : ""}
 			</header>
   )};
 }
@@ -66,8 +93,9 @@ const loginStyle = {
 	float: "right",
 	fontSize: "1.2rem",
 	position: "relative",
-	right: "16px",
-	top: "-3px"
+	right: "0px",
+	top: "-3px",
+	marginRight: "16px"
 }
 
 export default Header;

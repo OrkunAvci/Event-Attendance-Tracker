@@ -60,12 +60,12 @@ export class Form extends Component {
 
 	check = (e) => { this.setState( { [e.target.name]: ((e.target.checked) ? true : false) } ) };
 	
-	register = (e) => {
+	register = async (e) => {
 		e.preventDefault();
 
 		let flag = false;
 
-		axios.post("registration/createRegistration", {
+		await axios.post("registration/createRegistration", {
 			email: this.state.email,
 			event: {id: this.state.event.id},
 			intField1: (this.state.form.formField.intField1) ? parseInt(this.state.intField1) : 0,
@@ -78,14 +78,16 @@ export class Form extends Component {
 			chkField3: (this.state.form.formField.chkField3) ? this.state.chkField3 : false
 		})
 		.then((res) => {
-			if (res.status === 200)
+			if (res.status !== 200)
 			{
-				flag= true;
+				this.setState({
+					output: "Something went wrong. Try again."
+				})
 			}
 		})
 		.catch(console.error);
 
-		axios
+		await axios
 			.get(`registration/getCode?email=${this.state.email}&eventId=${this.state.id}`)
 			.then((res) => {
 				this.setState({
@@ -93,6 +95,8 @@ export class Form extends Component {
 				});
 			})
 			.catch(console.error);
+		
+		this.forceUpdate();
 	}
 
 	render() {
@@ -167,7 +171,7 @@ export class Form extends Component {
 						</div> : ""
 					}
 					
-					<div style={outputStyle} id="codeField">{this.state.output}</div>
+					<div style={outputStyle}>{this.state.output}</div>
 
 					<button style={buttonStyle} type="submit" onClick={this.register}>Register</button>
 				</form>

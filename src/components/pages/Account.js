@@ -8,13 +8,14 @@ import EventList from '../EventList';
 export class Account extends Component {
 	
 	state = {
+		id: 0,
 		user: null,
 		list: []
 	}
 	
 	componentDidMount(){
 
-		if (this.props.id === null)
+		if (this.props.id === 0)
 		{
 			return;
 		}
