@@ -61,7 +61,7 @@ export class Form extends Component {
 	check = (e) => { this.setState( { [e.target.name]: ((e.target.checked) ? true : false) } ) };
 	
 	register = (e) => {
-		e.prevetDefault();
+		e.preventDefault();
 
 		let flag = false;
 
@@ -86,7 +86,7 @@ export class Form extends Component {
 		.catch(console.error);
 
 		axios
-			.get(`registration/getCode?email=${this.state.email}&id=${this.state.id}`)
+			.get(`registration/getCode?email=${this.state.email}&eventId=${this.state.id}`)
 			.then((res) => {
 				this.setState({
 					output: res.data,
