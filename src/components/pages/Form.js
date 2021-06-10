@@ -75,14 +75,14 @@ export class Form extends Component {
 			chkField3: (this.state.form.formField.chkField3) ? this.state.chkField3 : false
 		})
 		.then((res) => {
-			if (res.status === 200)
-			{
-				//	Register is successful
-			}
-			else
-			{
-				console.log(res);
-			}
+			axios
+				.get(`registration/getCode?email=${this.state.email}&id=${this.state.id}`)
+				.then((res) => {
+					this.setState({
+						output: res.data
+					});
+				})
+				.catch(console.error);
 		})
 		.catch(console.error);
 	}
@@ -159,7 +159,7 @@ export class Form extends Component {
 						</div> : ""
 					}
 					
-					<div style={outputStyle} value={this.state.output} id="codeField"></div>
+					<div style={outputStyle} id="codeField">{this.state.output}</div>
 
 					<button style={buttonStyle} type="submit" onClick={this.register}>Register</button>
 				</form>

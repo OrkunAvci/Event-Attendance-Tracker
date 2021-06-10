@@ -6,6 +6,7 @@ export class Redirect extends Component {
 
 	state = {
 		id: null,
+		redirection: "",
 		email: "",
 		code: "",
 		output: ""
@@ -18,24 +19,35 @@ export class Redirect extends Component {
 		this.setState({
 			id: values.id
 		});
+
+		axios
+			.get(`/event/getEventById?id=${values.id}`)
+			.then((res) => {
+				this.setState({
+					redirection: res.data.eventUrl
+				});
+			})
+			.catch(console.error);
 	}
 
 	submit_code = (e) => {
 		e.preventDefault();
 
-		//	Check with database
 		axios
-			.post(`registration/validateCode?email=${this.state.email}&code=${this.state.code}`)
+			.get(`registration/verifyCode?email=${this.state.email}&code=${this.state.code}`)
 			.then((res) => {
-				if (res.status === 200)
+				if (res.data === true)
 				{
-					//	Send them off
+					return <Redirect to={this.state.redirection} />
 				}
 				else
 				{
-
+					this.setState({
+						output: "Code could not be verified. Please check your code."
+					});
 				}
 			})
+			.catch(console.error);
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
@@ -51,9 +63,9 @@ export class Redirect extends Component {
 					<label style={labeStyle}>Code</label>
 					<input style={inputStyle} type="text" name="code" onChange={this.update_fields} />
 
-					<div style={outputStyle} value={this.state.output} id="codeField"></div>
+					<div style={outputStyle} id="codeField">{this.state.output}</div>
 				
-					<button style={buttonStyle} type="submit" onSubmit={this.submit_code}>Enter the event</button>
+					<button style={buttonStyle} type="submit" onClick={this.submit_code}>Enter the event</button>
 				</form>
 			</div>
 		)
