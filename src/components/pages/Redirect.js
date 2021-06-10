@@ -36,8 +36,16 @@ export class Redirect extends Component {
 		axios
 			.get(`registration/verifyCode?email=${this.state.email}&eventId=${this.state.id}&code=${this.state.code}`)
 			.then((res) => {
-				window.location.href = this.state.redirection;
-				return null;
+				if (res.data === true)
+				{
+					window.location.replace(this.state.redirection);
+				}
+				else
+				{
+					this.setState({
+						output: "Code could not be verified. Please check your code."
+					});
+				}
 			})
 			.catch((err) => {
 				this.setState({
