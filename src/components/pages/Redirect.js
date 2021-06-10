@@ -38,7 +38,10 @@ export class Redirect extends Component {
 			.then((res) => {
 				if (res.data === true)
 				{
-					window.location.replace(this.state.redirection);
+					window.open(this.state.redirection, '_blank');
+					this.setState({
+						output: "Event link has been opened in a new tab. Enjoy!"
+					});
 				}
 				else
 				{
@@ -47,12 +50,7 @@ export class Redirect extends Component {
 					});
 				}
 			})
-			.catch((err) => {
-				this.setState({
-					output: "Code could not be verified. Please check your code."
-				});
-				console.error(err);
-			});
+			.catch(console.error);
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
