@@ -63,6 +63,8 @@ export class Form extends Component {
 	register = (e) => {
 		e.prevetDefault();
 
+		let flag = false;
+
 		axios.post("registration/createRegistration", {
 			email: this.state.email,
 			event: {id: this.state.event.id},
@@ -76,16 +78,21 @@ export class Form extends Component {
 			chkField3: (this.state.form.formField.chkField3) ? this.state.chkField3 : false
 		})
 		.then((res) => {
-			axios
-				.get(`registration/getCode?email=${this.state.email}&id=${this.state.id}`)
-				.then((res) => {
-					this.setState({
-						output: res.data
-					});
-				})
-				.catch(console.error);
+			if (res.status === 200)
+			{
+				flag= true;
+			}
 		})
 		.catch(console.error);
+
+		axios
+			.get(`registration/getCode?email=${this.state.email}&id=${this.state.id}`)
+			.then((res) => {
+				this.setState({
+					output: res.data,
+				});
+			})
+			.catch(console.error);
 	}
 
 	render() {
