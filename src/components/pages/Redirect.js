@@ -36,7 +36,8 @@ export class Redirect extends Component {
 		axios
 			.get(`registration/verifyCode?email=${this.state.email}&eventId=${this.state.id}&code=${this.state.code}`)
 			.then((res) => {
-				return <Redirect to={this.state.redirection} />
+				window.location.href = this.state.redirection;
+				return null;
 			})
 			.catch((err) => {
 				this.setState({
