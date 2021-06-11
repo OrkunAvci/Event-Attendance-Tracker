@@ -63,7 +63,7 @@ export class Form extends Component {
 	register = async (e) => {
 		e.preventDefault();
 
-		let flag = false;
+		
 
 		await axios.post("registration/createRegistration", {
 			email: this.state.email,
