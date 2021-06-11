@@ -32,20 +32,43 @@ class Event extends Component {
 			<div style={eventContainerStyle}>
 				<div style={infoStyle}>
 					<h2 style={{ marginBottom: "10px" }}>{(this.state.event) ? this.state.event.name : ""}</h2>
+
 					{
-						(this.state.event !== null) ? 
-						<p style={{ textAlign: "left" }}>
+						(this.state.event) ? 
+						<p style={pStyle}>
+							Created at {this.state.event.creationDate}.
+						</p> : ""
+					}
+
+					{
+						(this.state.event) ? 
+						<p style={pStyle}>
 							Can register before {this.state.event.formDate}.
 						</p> : ""
 					}
+
+					{
+						(this.state.event) ? 
+						<p style={pStyle}>
+							Event starts at {this.state.event.startDate}.
+						</p> : ""
+					}
+
+					{
+						(this.state.event) ? 
+						<p style={pStyle}>
+							Event ends at {this.state.event.endDate}.
+						</p> : ""
+					}
+
 				</div>
 				<button style={buttonStyle}>
-					<Link to={(this.state.formLink) ? this.state.formLink : (this.state.event !== null) ? `/form?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
+					<Link to={(this.state.formLink) ? this.state.formLink : (this.state.event) ? `/form?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
 						Form Page
 					</Link>
 				</button>
 				<button style={buttonStyle}>
-					<Link to={(this.state.redirectionLink) ? this.state.redirectionLink : (this.state.event !== null) ? `/redirect?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
+					<Link to={(this.state.redirectionLink) ? this.state.redirectionLink : (this.state.event) ? `/redirect?id=${this.state.event.id}` : "#"} style={{ color: "white" }}>
 						Redirection Page
 					</Link>
 				</button>
@@ -78,7 +101,12 @@ const infoStyle = {
 	boxSizing: "border-box",
 	display: "block",
 	position: "relative",
-};
+}
+
+const pStyle = {
+	textAlign: "left",
+	margin: "16px"
+}
 
 const buttonStyle = {
 	width: "350px",

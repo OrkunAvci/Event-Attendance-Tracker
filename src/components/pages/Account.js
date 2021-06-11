@@ -54,9 +54,18 @@ export class Account extends Component {
 			<div>
 				<div style={userStyle}>
 					{
-						(this.state.user === null) ?
-						"":
-						<h2>{this.state.user.name} {this.state.user.surname}</h2>
+						(this.state.user) ?
+						<h2>{this.state.user.name} {this.state.user.surname}</h2> : ""
+					}
+
+					{
+						(this.state.user) ?
+						<p style={pStyle}>Registered Email: {this.state.user.email}</p> : ""
+					}
+
+					{
+						(this.state.user) ?
+						<p style={pStyle}>Organizer: {(this.state.user.organizer) ? "True" : "False"}</p> : ""
 					}
 
 				</div>
@@ -86,6 +95,11 @@ const userStyle = {
 }
 
 const eventContainerStyle = {
+}
+
+const pStyle = {
+	textAlign: "left",
+	margin: "16px"
 }
 
 export default withRouter(Account);
