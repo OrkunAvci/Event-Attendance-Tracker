@@ -68,7 +68,10 @@ class CreateEvent extends React.Component {
 						chkField2: this.state.chkField2,
 						chkField3: this.state.chkField3,
 					},
-					user: this.state.user
+					
+				},
+				user: {
+					id: this.state.accountId
 				}
 			})
 			.then((res) => {
