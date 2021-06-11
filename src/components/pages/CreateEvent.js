@@ -7,6 +7,10 @@ class CreateEvent extends React.Component {
 		accountId: this.props.accountId,
 		name: "",
 		registerDate: null,
+		startDate: null,
+		endDate: null,
+		auth: 0,
+		blacklist: 0,
 		eventLink: "",
 		intField1: "",
 		intField2: "",
@@ -17,6 +21,7 @@ class CreateEvent extends React.Component {
 		chkField1: "",
 		chkField2: "",
 		chkField3: "",
+		output: ""
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
@@ -28,9 +33,10 @@ class CreateEvent extends React.Component {
 			.post("event/createEvent", {
 				name: this.state.name,
 				formDate: this.state.registerDate,
+				startDate: this.state.startDate,
+				endDate: this.state.endDate,
 				eventUrl: this.state.eventLink,
-				formUrl: "",
-				redirectUrl: "",
+				authorization: this.state.auth,
 				form: {
 					formField: {
 						intField1: this.state.intField1 !== "",
@@ -52,13 +58,17 @@ class CreateEvent extends React.Component {
 						chkField2: this.state.chkField2,
 						chkField3: this.state.chkField3,
 					},
-				},
+				}
 			})
 			.then((res) => {
 				if (res.status === 200) {
-					console.log("We good.");
+					this.setState({
+						output: "Event has been registered. You can search it up in Events page."
+					});
 				} else {
-					console.log(res);
+					this.setState({
+						output: "Something went wrong while registering the event. Please check your information"
+					});
 				}
 			})
 			.catch(console.error);
@@ -83,6 +93,20 @@ class CreateEvent extends React.Component {
 
 					<div style={divStyle}>Event Link</div>
 					<input style={inputStyle} type="text" name="eventLink" onChange={this.update_fields} />
+
+					<div style={divStyle}>When does the event start?</div>
+					<input style={inputStyle} type="datetime-local" name="startDate" onChange={this.update_fields} />
+
+					<div style={divStyle}>When does the event end?</div>
+					<input style={inputStyle} type="datetime-local" name="endDate" onChange={this.update_fields} />
+
+					<div style={divStyle}>Blacklist</div>
+					<input style={inputStyle} type="number" name="blacklist" min="1" max="100" onChange={this.update_fields} />
+
+					<div style={divStyle}>Who can register to this event?</div>
+					<div style={radioStyle}><input style={{marginRight: "6px"}} type="radio" value="0" name="auth" onChange={this.update_fields} />Everyone can join!</div>
+					<div style={radioStyle}><input style={{marginRight: "6px"}} type="radio" value="1" name="auth" onChange={this.update_fields} />Only user in the system can join.</div>
+					<div style={radioStyle}><input style={{marginRight: "6px"}} type="radio" value="2" name="auth" onChange={this.update_fields} />Only people in my company can join.</div>
 
 					<div style={divisionStyle}>
 					Registration Form Information (Only fill what is needed):
@@ -116,6 +140,8 @@ class CreateEvent extends React.Component {
 
 					<div style={divStyle}>Checkbox Answer 3</div>
 					<input style={inputStyle} type="text" name="chkField3" onChange={this.update_fields} />
+
+					<div>{this.state.output}</div>
 
 					<button style={buttonStyle} type="submit" onClick={this.create_event}>Create The Event</button>
 				</form>
@@ -155,8 +181,15 @@ const divStyle = {
 	color: "rgba(255, 253, 228, 0.9)",
 	marginTop: "20px",
 	left: "0",
+	textAlign: "left",
+	fontSize: "1.1rem"
+}
+
+const radioStyle = {
+	color: "rgba(255, 253, 248, 1.0)",
+	marginTop: "4px",
 	textAlign: "left"
-};
+}
 
 const inputStyle = {
 	display : "block",
