@@ -14,6 +14,8 @@ class Events extends React.Component {
 	search_events= (e) => {
 		e.preventDefault();
 
+		if (this.state.eventName === "") {return;}
+
 		this.setState({
 			searched: true
 		});

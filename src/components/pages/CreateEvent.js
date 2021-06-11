@@ -21,6 +21,7 @@ class CreateEvent extends React.Component {
 		chkField1: "",
 		chkField2: "",
 		chkField3: "",
+		user: null,
 		output: ""
 	}
 
@@ -28,6 +29,15 @@ class CreateEvent extends React.Component {
 
 	create_event = (e) => {
 		e.preventDefault();
+
+		axios
+			.get(`user/getUser?id=${this.state.accountId}`)
+			.then((res) => {
+				this.setState({
+					user: res.data
+				})
+			})
+			.catch(console.error);
 
 		axios
 			.post("event/createEvent", {
@@ -58,6 +68,7 @@ class CreateEvent extends React.Component {
 						chkField2: this.state.chkField2,
 						chkField3: this.state.chkField3,
 					},
+					user: this.state.user
 				}
 			})
 			.then((res) => {
@@ -141,7 +152,7 @@ class CreateEvent extends React.Component {
 					<div style={divStyle}>Checkbox Answer 3</div>
 					<input style={inputStyle} type="text" name="chkField3" onChange={this.update_fields} />
 
-					<div>{this.state.output}</div>
+					<div style={outputStyle}>{this.state.output}</div>
 
 					<button style={buttonStyle} type="submit" onClick={this.create_event}>Create The Event</button>
 				</form>
@@ -212,6 +223,12 @@ const buttonStyle = {
 	marginTop: "40px",
 	marginBottom: "20px",
 	position: "relative",
+}
+
+const outputStyle = {
+	display : "block",
+	color: "rgba(255, 103, 108, 1)",
+	textAlign: "middle"
 }
 
 const divisionStyle = {
