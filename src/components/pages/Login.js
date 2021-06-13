@@ -6,23 +6,34 @@ class Login extends Component {
 	
 	state = {
 		email: "",
-		password: ""
+		password: "",
+		output: ""
 	}
 
-	login_request = (e) => {
+	login_request = async (e) => {
 		e.preventDefault();
 		
-		axios
+		let flag = false;
+		await axios
 			.post("user/login", {
 				email: this.state.email,
 				password: this.state.password
 			})
 			.then((res) => {
 				console.log(res);
+				if (res.status !== 200)
+				{
+					this.setState({
+						output: "Email or password incorrect. Please try again."
+					});
+					flag = true;
+				}
 			})
 			.catch(console.error);
 
-		axios
+		if (flag === true)	{return;}
+
+		await axios
 			.get(`user/getUserId?email=${this.state.email}`)
 			.then((res) => {
 				console.log(res);
@@ -44,6 +55,8 @@ class Login extends Component {
 				
 					<label style={labeStyle}>Password</label>
 					<input style={inputStyle} type="password" name="password" onChange={this.update_fields} />
+
+					<div style={outputStyle} id="codeField">{this.state.output}</div>
 
 					<Link style={linkStyle} to="/signup">Don't have an account yet? Sign up here!</Link>
 
@@ -89,6 +102,12 @@ const inputStyle = {
 	width: "100%",
 	height: "20px",
 	padding: "0px 5px"
+}
+
+const outputStyle = {
+	display : "block",
+	color: "rgba(255, 103, 108, 1)",
+	textAlign: "middle"
 }
 
 const linkStyle = {

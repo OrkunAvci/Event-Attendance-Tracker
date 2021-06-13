@@ -8,6 +8,7 @@ export class Signup extends React.Component {
 		name: "",
 		surname: "",
 		password: "",
+		output: ""
 	};
 
 	signup_request = (e) => {
@@ -22,24 +23,16 @@ export class Signup extends React.Component {
 				}
 			)
 			.then((res) => {
-				
-				let output = document.getElementById("output");
-				
-				if (res.status === 200)
+				if (res.status !== 200)
 				{
-					output.setAttribute("value", "Signed up.");
-				}
-				else if (res.status === 500)
-				{
-					output.setAttribute("value", "Account Exists.");
-				}
-				else
-				{
-					console.log(res);
+					this.setState({
+						output: "Account could not be created. Try again."
+					})
 				}
 
 				this.props.history.push("/login");
-			});
+			})
+			.catch(console.error);
 	};
 
 	update_fields = (e) => {
@@ -82,6 +75,8 @@ export class Signup extends React.Component {
 						name="password"
 						onChange={this.update_fields}
 					/>
+
+					<div style={outputStyle} id="codeField">{this.state.output}</div>
 
 					<Link style={linkStyle} to="/login">
 						Already have an account? Login here.
@@ -136,6 +131,12 @@ const inputStyle = {
 	width: "100%",
 	height: "20px",
 	padding: "0px 5px"
+}
+
+const outputStyle = {
+	display : "block",
+	color: "rgba(255, 103, 108, 1)",
+	textAlign: "middle"
 }
 
 const linkStyle = {
