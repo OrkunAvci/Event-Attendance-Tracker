@@ -21,15 +21,14 @@ class Login extends Component {
 			})
 			.then((res) => {
 				console.log(res);
-				if (res.status !== 200)
-				{
-					this.setState({
-						output: "Email or password incorrect. Please try again."
-					});
-					flag = true;
-				}
 			})
-			.catch(console.error);
+			.catch((err) => {
+				this.setState({
+					output: "Email or password incorrect. Please try again."
+				});
+				flag = true;
+				console.error(err);
+			});
 
 		if (flag === true)	{return;}
 
@@ -107,7 +106,8 @@ const inputStyle = {
 const outputStyle = {
 	display : "block",
 	color: "rgba(255, 103, 108, 1)",
-	textAlign: "middle"
+	textAlign: "middle",
+	margin: "10px"
 }
 
 const linkStyle = {

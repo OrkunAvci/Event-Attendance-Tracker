@@ -13,7 +13,6 @@ export class Signup extends React.Component {
 
 	signup_request = (e) => {
 		e.preventDefault();
-		console.log("Got here.");
 		axios
 			.post("user/signUp", {
 					email: this.state.email,
@@ -23,16 +22,14 @@ export class Signup extends React.Component {
 				}
 			)
 			.then((res) => {
-				if (res.status !== 200)
-				{
-					this.setState({
-						output: "Account could not be created. Try again."
-					})
-				}
-
 				this.props.history.push("/login");
 			})
-			.catch(console.error);
+			.catch((err) => {
+				this.setState({
+					output: "Account could not be created. Try again."
+				});
+				console.error(err);
+			});
 	};
 
 	update_fields = (e) => {
@@ -136,7 +133,8 @@ const inputStyle = {
 const outputStyle = {
 	display : "block",
 	color: "rgba(255, 103, 108, 1)",
-	textAlign: "middle"
+	textAlign: "middle",
+	margin: "10px"
 }
 
 const linkStyle = {
