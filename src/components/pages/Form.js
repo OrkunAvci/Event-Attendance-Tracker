@@ -66,7 +66,7 @@ export class Form extends Component {
 		e.preventDefault();
 
 		
-
+		let flag = false;
 		await axios.post("registration/createRegistration", {
 			email: this.state.email,
 			event: {id: this.state.event.id},
@@ -78,17 +78,20 @@ export class Form extends Component {
 			chkField1: (this.state.form.formField.chkField1) ? this.state.chkField1 : false,
 			chkField2: (this.state.form.formField.chkField2) ? this.state.chkField2 : false,
 			chkField3: (this.state.form.formField.chkField3) ? this.state.chkField3 : false,
-			authorization: (this.state.accountId === 0) ? 0 : 1
+			authorization: (this.state.accountId === undefined || this.state.accountId === 0) ? 0 : 1
 		})
 		.then((res) => {
-			if (res.status !== 200)
-			{
-				this.setState({
-					output: "Something went wrong. Try again."
-				})
-			}
+			console.log(res);
 		})
-		.catch(console.error);
+		.catch((err) => {
+			this.setState({
+				output: "Something went wrong. Try again."
+			});
+			flag = true;
+			console.error(err);
+		});
+
+		if (flag === true)	{return;}
 
 		await axios
 			.get(`registration/getCode?email=${this.state.email}&eventId=${this.state.id}`)
@@ -181,6 +184,10 @@ export class Form extends Component {
 			</div>
 		);
 	}
+}
+
+Form.propTypes = {
+	accountId: PropTypes.number.isRequired
 }
 
 //CSS Styling:
