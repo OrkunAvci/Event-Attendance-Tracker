@@ -26,6 +26,14 @@ export class Form extends Component {
 	async componentDidMount(){
 		if (!(this.state.id === null || this.state.id === undefined)) {return;}
 
+		if (this.state.accountId === undefined)
+		{
+			this.setState({
+				accountId: this.props.accountId
+			});
+			this.forceUpdate();
+		}
+
 		let values = query.parse(this.props.location.search);
 		if (values.id === undefined)
 		{
