@@ -3,9 +3,11 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import query from "query-string";
+import PropTypes from 'prop-types';
 
 export class Form extends Component {
 	state = {
+		accountId: this.props.accountId,
 		id: null,
 		event: null,
 		form: null,
@@ -75,7 +77,8 @@ export class Form extends Component {
 			strField3: (this.state.form.formField.strField3) ? this.state.strField3 : "",
 			chkField1: (this.state.form.formField.chkField1) ? this.state.chkField1 : false,
 			chkField2: (this.state.form.formField.chkField2) ? this.state.chkField2 : false,
-			chkField3: (this.state.form.formField.chkField3) ? this.state.chkField3 : false
+			chkField3: (this.state.form.formField.chkField3) ? this.state.chkField3 : false,
+			authorization: (this.state.accountId === 0) ? 0 : 1
 		})
 		.then((res) => {
 			if (res.status !== 200)
