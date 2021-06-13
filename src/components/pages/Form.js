@@ -69,7 +69,7 @@ export class Form extends Component {
 		let flag = false;
 		await axios.post("registration/createRegistration", {
 			email: this.state.email,
-			event: {id: this.state.event.id},
+			event: this.state.event,
 			intField1: (this.state.form.formField.intField1 && this.state.intField1 !== "") ? parseInt(this.state.intField1) : 0,
 			intField2: (this.state.form.formField.intField2 && this.state.intField2 !== "") ? parseInt(this.state.intField2) : 0,
 			strField1: (this.state.form.formField.strField1 && this.state.strField1 !== "") ? this.state.strField1 : "",
