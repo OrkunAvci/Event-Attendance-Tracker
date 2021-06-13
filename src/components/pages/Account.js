@@ -13,9 +13,9 @@ export class Account extends Component {
 		list: []
 	}
 	
-	componentDidMount(){
+	async componentDidMount(){
 
-		if (this.props.id === 0)
+		if (this.state.id !== 0)
 		{
 			return;
 		}
@@ -26,16 +26,16 @@ export class Account extends Component {
 			id: values.id,
 		});
 
-		axios.get(`/user/getUser?id=${values.id}`)
+		await axios.get(`/user/getUser?id=${values.id}`)
 		.then((res)=>{
 			console.log(res);
 			this.setState({
 				user: res.data
-			})
+			});
 		})
 		.catch(console.error);
 
-		axios.get(`/event/getEventByName?name=Event`)
+		await axios.get(`/registration/getRegEvents?email=${this.state.user.email}`)
 		.then((res)=>{
 			console.log(res.data)
 			this.setState({
