@@ -10,7 +10,7 @@ class CreateEvent extends React.Component {
 		startDate: null,
 		endDate: null,
 		auth: 0,
-		blacklist: 0,
+		lotalty: 0,
 		eventLink: "",
 		intField1: "",
 		intField2: "",
@@ -22,6 +22,8 @@ class CreateEvent extends React.Component {
 		chkField2: "",
 		chkField3: "",
 		description: "",
+		blacklist: "",
+		whitelist: "",
 		user: null,
 		output: ""
 	}
@@ -102,13 +104,13 @@ class CreateEvent extends React.Component {
 					</div>
 
 					<div style={divStyle}>Event Name</div>
-					<input style={inputStyle} type="text" name="name" onChange={this.update_fields} />
+					<input style={inputStyle} type="text" name="name" onChange={this.update_fields} max="256"/>
 
 					<div style={divStyle}>Event Description</div>
-					<input style={inputStyle} type="text" name="description" onChange={this.update_fields} />
+					<textarea style={textareaStyle} name="description" onChange={this.update_fields} max="512"/>
 
 					<div style={divStyle}>Event Link</div>
-					<input style={inputStyle} type="text" name="eventLink" onChange={this.update_fields} />
+					<input style={inputStyle} type="text" name="eventLink" onChange={this.update_fields} max="256"/>
 
 					<div style={divStyle}>Last Registration Date</div>
 					<input style={inputStyle} type="date" name="registerDate" onChange={this.update_fields} />
@@ -119,8 +121,14 @@ class CreateEvent extends React.Component {
 					<div style={divStyle}>When does the event end?</div>
 					<input style={inputStyle} type="datetime-local" name="endDate" onChange={this.update_fields} />
 
-					<div style={divStyle}>Blacklist</div>
-					<input style={inputStyle} type="number" name="blacklist" min="1" max="100" onChange={this.update_fields} />
+					<div style={divStyle}>Attendance Loyalty</div>
+					<input style={inputStyle} type="number" name="lotalty" min="1" max="100" onChange={this.update_fields} />
+
+					<div style={divStyle}>Whitelisted Emails (Separate by comma)</div>
+					<textarea style={textareaStyle} name="whitelist" onChange={this.update_fields} max="512"/>
+
+					<div style={divStyle}>Blacklisted Emails (Separate by comma)</div>
+					<textarea style={textareaStyle} name="blacklist" onChange={this.update_fields} max="512"/>
 
 					<div style={divStyle}>Who can register to this event?</div>
 					<div style={radioStyle}><input style={{marginRight: "6px"}} type="radio" value="0" name="auth" onChange={this.update_fields} />Everyone can join!</div>
@@ -202,6 +210,18 @@ const divStyle = {
 	left: "0",
 	textAlign: "left",
 	fontSize: "1.1rem"
+}
+
+const textareaStyle = {
+	display : "block",
+	marginTop: "4px",
+	marginBottom: "16px",
+	borderRadius: "8px",
+	border: "0",
+	width: "100%",
+	height: "150px",
+	padding: "0px 5px",
+	resize: "none"
 }
 
 const radioStyle = {
