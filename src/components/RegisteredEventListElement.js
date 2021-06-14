@@ -1,12 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 class RegisteredEventListElement extends React.Component {
 	state = {
 		event: this.props.event,
 		eventLink: `/event?id=${this.props.event.id}`,
-		code: "Your Code"
+		code: "",
+		dateOptions: { year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' }
 	};
+
+	componentDidMount(){
+		if (this.state.code === "")
+		{
+			axios
+			.get(`registration/getCode?email=${this.props.email}&eventId=${this.state.event.id}`)
+			.then((res) => {
+				this.setState({
+					code: res.data
+				});
+			})
+			.catch(console.error);
+			this.forceUpdate();
+		}
+	}
 
 	render = () => {
 		return (

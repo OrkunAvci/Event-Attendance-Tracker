@@ -78,7 +78,7 @@ export class Account extends Component {
 				</div>
 				<div style={eventContainerStyle}>
 					<ul>
-						<RegisteredEventList list={list}/>
+						<RegisteredEventList list={list} email={(this.state.user) ? this.state.user.email : ""}/>
 					</ul>
 				</div>
 			</div>

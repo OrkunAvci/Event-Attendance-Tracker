@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 class EventListElement extends React.Component {
 	state = {
 		event: this.props.event,
-		eventLink: `/event?id=${this.props.event.id}`
+		eventLink: `/event?id=${this.props.event.id}`,
+		dateOptions: { year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' }
 	};
 
 	render = () => {
@@ -14,7 +15,7 @@ class EventListElement extends React.Component {
 					{this.state.event.name}
 				</Link>
 				<p style={pStyle}>{this.state.event.description}</p>
-				<p style={pStyle}>Event starts at {this.state.event.startDate}</p>
+				<p style={pStyle}>Event starts at {(new Date(this.state.event.startDate)).toLocaleDateString('en-TR', this.state.dateOptions)}</p>
 				<p style={pStyle}>Created by {this.state.event.user.name + " " + this.state.event.user.surname}</p>
 			</li>
 		);

@@ -1,13 +1,13 @@
 import React from 'react'
 
-import EventListElement from "./EventListElement";
+import RegisteredEventListElement from "./RegisteredEventListElement";
 
 class RegisteredEventList extends React.Component {
 	render = () => {
 		return this.props.list === null
 			? ""
 			: this.props.list.map((eve) => {
-					return <EventListElement key={eve.id} event={eve} email={this.props.email} />;
+					return <RegisteredEventListElement key={eve.id} event={eve} email={this.props.email} />;
 			  });
 	};
 }
