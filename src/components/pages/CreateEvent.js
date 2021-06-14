@@ -30,10 +30,10 @@ class CreateEvent extends React.Component {
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
 
-	create_event = (e) => {
+	create_event = async (e) => {
 		e.preventDefault();
 
-		axios
+		await axios
 			.get(`user/getUser?id=${this.state.accountId}`)
 			.then((res) => {
 				this.setState({
@@ -42,7 +42,15 @@ class CreateEvent extends React.Component {
 			})
 			.catch(console.error);
 
-		axios
+		await this.setState({
+			blacklist: this.state.blacklist.split(','),
+			whitelist: this.state.whitelist.split(',')
+		});
+
+		console.log(this.state.blacklist);
+		console.log(this.state.whitelist);
+		
+		await axios
 			.post("event/createEvent", {
 				name: this.state.name,
 				description: this.state.description,
@@ -51,6 +59,7 @@ class CreateEvent extends React.Component {
 				endDate: this.state.endDate,
 				eventUrl: this.state.eventLink,
 				authorization: parseInt(this.state.auth),
+				loyalty: this.state.loyalty,
 				form: {
 					formField: {
 						intField1: this.state.intField1 !== "",
