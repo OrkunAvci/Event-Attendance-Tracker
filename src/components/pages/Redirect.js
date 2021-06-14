@@ -34,23 +34,21 @@ export class Redirect extends Component {
 		e.preventDefault();
 
 		axios
-			.get(`registration/verifyCode?email=${this.state.email}&eventId=${this.state.id}&code=${this.state.code}`)
+			.get(
+				`registration/verifyCode?email=${this.state.email}&eventId=${this.state.id}&code=${this.state.code}`
+			)
 			.then((res) => {
-				if (res.data === true)
-				{
-					window.open(this.state.redirection, '_blank');
-					this.setState({
-						output: "Event link has been opened in a new tab. Enjoy!"
-					});
-				}
-				else
-				{
-					this.setState({
-						output: "Code could not be verified. Please check your code."
-					});
-				}
+				window.open(this.state.redirection, "_blank");
+				this.setState({
+					output: "Event link has been opened in a new tab. Enjoy!",
+				});
 			})
-			.catch(console.error);
+			.catch((err) => {
+				this.setState({
+					output: "Code could not be verified. Please check your code.",
+				});
+				console.error(err);
+			});
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
