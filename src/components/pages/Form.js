@@ -93,7 +93,7 @@ export class Form extends Component {
 		})
 		.catch((err) => {
 			this.setState({
-				output: "Something went wrong. Try again."
+				output: err.message,
 			});
 			flag = true;
 			console.error(err);

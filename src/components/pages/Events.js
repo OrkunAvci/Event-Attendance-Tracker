@@ -25,8 +25,9 @@ class Events extends React.Component {
 			.then((res) => {
 				console.log(res.data);
 				this.setState({
-					list: res.data,
+					list: (this.props.accountId === 0) ? res.data.filter(el => el.authorization === 0) : res.data,
 				});
+				console.log(this.state.list);
 			})
 			.catch((err) => {
 				console.error(err);

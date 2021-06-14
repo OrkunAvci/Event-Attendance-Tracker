@@ -4,7 +4,7 @@ import axios from 'axios';
 import { withRouter } from "react-router-dom";
 import query from "query-string";
 
-import EventList from '../EventList';
+import RegisteredEventList from '../RegisteredEventList';
 export class Account extends Component {
 	
 	state = {
@@ -78,7 +78,7 @@ export class Account extends Component {
 				</div>
 				<div style={eventContainerStyle}>
 					<ul>
-						<EventList list={list}/>
+						<RegisteredEventList list={list}/>
 					</ul>
 				</div>
 			</div>

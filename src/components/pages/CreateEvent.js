@@ -46,7 +46,7 @@ class CreateEvent extends React.Component {
 				startDate: this.state.startDate,
 				endDate: this.state.endDate,
 				eventUrl: this.state.eventLink,
-				authorization: this.state.auth,
+				authorization: parseInt(this.state.auth),
 				form: {
 					formField: {
 						intField1: this.state.intField1 !== "",
@@ -82,8 +82,7 @@ class CreateEvent extends React.Component {
 			})
 			.catch((err) => {
 				this.setState({
-					output:
-						"Something went wrong while registering the event. Please check your information.",
+					output: err.message,
 				});
 				console.error(err);
 			});

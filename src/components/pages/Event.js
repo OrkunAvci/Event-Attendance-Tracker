@@ -5,7 +5,8 @@ import query from 'query-string'
 
 class Event extends Component {
 	state = {
-		event: null
+		event: null,
+		dateOptions: { year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' }
 	};
 
 	componentDidMount(){
@@ -36,28 +37,42 @@ class Event extends Component {
 					{
 						(this.state.event) ? 
 						<p style={pStyle}>
-							Created at {this.state.event.creationDate}.
+							Description: {this.state.event.description}.
 						</p> : ""
 					}
 
 					{
 						(this.state.event) ? 
 						<p style={pStyle}>
-							Can register before {this.state.event.formDate}.
+							Event was created at {(new Date(this.state.event.creationDate)).toLocaleDateString('en-TR', this.state.dateOptions)}.
 						</p> : ""
 					}
 
 					{
 						(this.state.event) ? 
 						<p style={pStyle}>
-							Event starts at {this.state.event.startDate}.
+							You can register to this event before {(new Date(this.state.event.formDate)).toLocaleDateString('en-TR', this.state.dateOptions)}.
 						</p> : ""
 					}
 
 					{
 						(this.state.event) ? 
 						<p style={pStyle}>
-							Event ends at {this.state.event.endDate}.
+							Event starts at {(new Date(this.state.event.startDate)).toLocaleString('en-TR', this.state.dateOptions)}.
+						</p> : ""
+					}
+
+					{
+						(this.state.event) ? 
+						<p style={pStyle}>
+							Event ends at {(new Date(this.state.event.endDate)).toLocaleString('en-TR', this.state.dateOptions)}.
+						</p> : ""
+					}
+
+					{
+						(this.state.event) ? 
+						<p style={pStyle}>
+							Event is created by {this.state.event.user.name + " " + this.state.event.user.surname}.
 						</p> : ""
 					}
 

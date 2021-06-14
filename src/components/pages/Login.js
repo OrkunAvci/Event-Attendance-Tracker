@@ -24,7 +24,7 @@ class Login extends Component {
 			})
 			.catch((err) => {
 				this.setState({
-					output: "Email or password incorrect. Please try again."
+					output: err.message,
 				});
 				flag = true;
 				console.error(err);
