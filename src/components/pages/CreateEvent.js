@@ -68,24 +68,25 @@ class CreateEvent extends React.Component {
 						chkField2: this.state.chkField2,
 						chkField3: this.state.chkField3,
 					},
-					
 				},
 				user: {
-					id: this.state.accountId
-				}
+					id: this.state.accountId,
+				},
 			})
 			.then((res) => {
-				if (res.status === 200) {
-					this.setState({
-						output: "Event has been registered. You can search it up in Events page."
-					});
-				} else {
-					this.setState({
-						output: "Something went wrong while registering the event. Please check your information"
-					});
-				}
+				this.setState({
+					output:
+						"Event has been registered. You can search it up in Events page.",
+				});
+				console.log(res);
 			})
-			.catch(console.error);
+			.catch((err) => {
+				this.setState({
+					output:
+						"Something went wrong while registering the event. Please check your information.",
+				});
+				console.error(err);
+			});
 	}
 
 	render() {
