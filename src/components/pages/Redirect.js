@@ -42,6 +42,7 @@ export class Redirect extends Component {
 				this.setState({
 					output: "Event link has been opened in a new tab. Enjoy!",
 				});
+				console.log(res);
 			})
 			.catch((err) => {
 				this.setState({
