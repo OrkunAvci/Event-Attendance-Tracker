@@ -27,6 +27,12 @@ export class Header extends React.Component {
 			})
 			.catch(console.error);
 		}
+		else if (this.state.org !== null && this.props.id === 0)
+		{
+			this.setState({
+				org: null
+			});
+		}
 		else
 		{
 			this.setState({

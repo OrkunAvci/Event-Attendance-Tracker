@@ -12,6 +12,11 @@ export class Account extends Component {
 		user: null,
 		list: []
 	}
+
+	logout = () => {
+		this.props.logout();
+		this.props.history.push(`/`);
+	}
 	
 	async componentDidMount(){
 
@@ -68,6 +73,8 @@ export class Account extends Component {
 						<p style={pStyle}>Organizer: {(this.state.user.organizer) ? "True" : "False"}</p> : ""
 					}
 
+					<button style={buttonStyle} type="submit" onClick={this.logout}>Logout</button>
+
 				</div>
 				<div style={eventContainerStyle}>
 					<ul>
@@ -100,6 +107,16 @@ const eventContainerStyle = {
 const pStyle = {
 	textAlign: "left",
 	margin: "16px"
+}
+
+const buttonStyle = {
+	padding: "5px 15px",
+	borderRadius: "6px",
+	border: "0",
+	marginTop: "40px",
+	marginBottom: "20px",
+	position: "relative",
+	left: "auto"
 }
 
 export default withRouter(Account);

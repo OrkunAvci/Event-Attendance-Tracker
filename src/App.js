@@ -29,6 +29,12 @@ class App extends Component {
 		});
 	}
 
+	logout = () => {
+		this.setState({
+			accountId: 0
+		});
+	}
+
 	render (){
 		return (
 			<Router>
@@ -49,7 +55,10 @@ class App extends Component {
 						</Route>
 
 						<Route exact={true} path="/account">
-							<Account id={this.state.accountId} />
+							<Account
+							id={this.state.accountId}
+							logout={this.logout}
+							/>
 						</Route>
 
 						<Route exact={true} path="/events" component={Events} />
