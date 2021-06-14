@@ -10,6 +10,10 @@ class RegisteredEventListElement extends React.Component {
 		dateOptions: { year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' }
 	};
 
+	shouldComponentUpdate(prevProps){
+		return prevProps.email !== this.props.email;
+	}
+
 	componentDidMount(){
 		if (this.state.code === "")
 		{
@@ -64,6 +68,7 @@ const linkStyle = {
 const pStyle = {
 	textAlign: "left",
 	fontSize: "1rem",
+	margin: "16px"
 };
 
 export default RegisteredEventListElement;

@@ -47,6 +47,7 @@ const linkStyle = {
 const pStyle = {
 	textAlign: "left",
 	fontSize: "1rem",
+	margin: "16px"
 };
 
 export default EventListElement;

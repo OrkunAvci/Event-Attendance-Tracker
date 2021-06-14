@@ -21,6 +21,7 @@ class CreateEvent extends React.Component {
 		chkField1: "",
 		chkField2: "",
 		chkField3: "",
+		description: "",
 		user: null,
 		output: ""
 	}
@@ -42,6 +43,7 @@ class CreateEvent extends React.Component {
 		axios
 			.post("event/createEvent", {
 				name: this.state.name,
+				description: this.state.description,
 				formDate: this.state.registerDate,
 				startDate: this.state.startDate,
 				endDate: this.state.endDate,
@@ -102,11 +104,14 @@ class CreateEvent extends React.Component {
 					<div style={divStyle}>Event Name</div>
 					<input style={inputStyle} type="text" name="name" onChange={this.update_fields} />
 
-					<div style={divStyle}>Last Registration Date</div>
-					<input style={inputStyle} type="date" name="registerDate" onChange={this.update_fields} />
+					<div style={divStyle}>Event Description</div>
+					<input style={inputStyle} type="text" name="description" onChange={this.update_fields} />
 
 					<div style={divStyle}>Event Link</div>
 					<input style={inputStyle} type="text" name="eventLink" onChange={this.update_fields} />
+
+					<div style={divStyle}>Last Registration Date</div>
+					<input style={inputStyle} type="date" name="registerDate" onChange={this.update_fields} />
 
 					<div style={divStyle}>When does the event start?</div>
 					<input style={inputStyle} type="datetime-local" name="startDate" onChange={this.update_fields} />
