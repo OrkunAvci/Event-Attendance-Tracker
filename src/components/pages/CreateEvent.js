@@ -10,7 +10,7 @@ class CreateEvent extends React.Component {
 		startDate: null,
 		endDate: null,
 		auth: 0,
-		lotalty: 0,
+		loyalty: 0,
 		eventLink: "",
 		intField1: "",
 		intField2: "",
@@ -131,7 +131,7 @@ class CreateEvent extends React.Component {
 					<input style={inputStyle} type="datetime-local" name="endDate" onChange={this.update_fields} />
 
 					<div style={divStyle}>Attendance Loyalty</div>
-					<input style={inputStyle} type="number" name="lotalty" min="1" max="100" onChange={this.update_fields} />
+					<input style={inputStyle} type="number" name="loyalty" min="1" max="100" onChange={this.update_fields} />
 
 					<div style={divStyle}>Whitelisted Emails (Separate by comma)</div>
 					<textarea style={textareaStyle} name="whitelist" onChange={this.update_fields} max="512"/>
