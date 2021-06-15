@@ -43,8 +43,8 @@ class CreateEvent extends React.Component {
 			.catch(console.error);
 
 		await this.setState({
-			blacklist: this.state.blacklist.split(','),
-			whitelist: this.state.whitelist.split(',')
+			blacklist: (this.state.blacklist === "") ? this.state.blacklist.split(',') : [],
+			whitelist: (this.state.whitelist === "") ? this.state.whitelist.split(',') : []
 		});
 
 		console.log(this.state.blacklist);

@@ -8,7 +8,7 @@ export class Redirect extends Component {
 		id: null,
 		redirection: "",
 		email: "",
-		code: "",
+		code: null,
 		output: ""
 	}
 
@@ -38,15 +38,24 @@ export class Redirect extends Component {
 				`registration/verifyCode?email=${this.state.email}&eventId=${this.state.id}&code=${this.state.code}`
 			)
 			.then((res) => {
-				window.open(this.state.redirection, "_blank");
-				this.setState({
-					output: "Event link has been opened in a new tab. Enjoy!",
-				});
+				if (res.data === true)
+				{
+					window.open(this.state.redirection, "_blank");
+					this.setState({
+						output: "Event link has been opened in a new tab. Enjoy!",
+					});
+				}
+				else
+				{
+					this.setState({
+						output: "Code is wrong. Please try again.",
+					});
+				}
 				console.log(res);
 			})
 			.catch((err) => {
 				this.setState({
-					output: "Code could not be verified. Please check your code.",
+					output: "Please fill all fields.",
 				});
 				console.error(err);
 			});

@@ -15,8 +15,9 @@ class EventListElement extends React.Component {
 					{this.state.event.name}
 				</Link>
 				<p style={pStyle}>{this.state.event.description}</p>
-				<p style={pStyle}>Event starts at {(new Date(this.state.event.startDate)).toLocaleDateString('en-TR', this.state.dateOptions)}</p>
-				<p style={pStyle}>Created by {this.state.event.user.name + " " + this.state.event.user.surname}</p>
+				<p style={pStyle}>You can register to this event until {(new Date(this.state.event.formDate)).toLocaleDateString('en-TR', this.state.dateOptions)}.</p>
+				<p style={pStyle}>Event starts at {(new Date(this.state.event.startDate)).toLocaleDateString('en-TR', this.state.dateOptions)}.</p>
+				<p style={p2Style}>Created by {this.state.event.user.name + " " + this.state.event.user.surname}.</p>
 			</li>
 		);
 	};
@@ -36,17 +37,22 @@ const liStyle = {
 	borderRadius: "48px",
 	color: "white",
 	lineSpacing: "30px",
-	fontSize: "1.2rem"
+	fontSize: "1rem"
 };
 
 const linkStyle = {
 	textDecoration: "none",
-	color: "white"
+	color: "white",
+	fontSize: "1.3rem"
 };
 
 const pStyle = {
 	textAlign: "left",
-	fontSize: "1rem",
+	margin: "16px"
+};
+
+const p2Style = {
+	textAlign: "right",
 	margin: "16px"
 };
 

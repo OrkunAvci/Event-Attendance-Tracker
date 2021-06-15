@@ -25,15 +25,16 @@ class Events extends React.Component {
 			.then((res) => {
 				console.log(res.data);
 				this.setState({
-					list: (this.props.accountId === 0) ? res.data.filter(el => el.authorization === 0) : res.data,
+					list: res.data,
 				});
+				this.state.list.filter((eve) => ( (new Date() < eve.formDate) ));
 				console.log(this.state.list);
 			})
 			.catch((err) => {
 				console.error(err);
 			});
 	}
-
+	
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
 
 	render() {

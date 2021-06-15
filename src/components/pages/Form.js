@@ -26,12 +26,11 @@ export class Form extends Component {
 	async componentDidMount(){
 		if (!(this.state.id === null || this.state.id === undefined)) {return;}
 
-		if (this.state.accountId === undefined)
+		if (!this.state.accountId)
 		{
 			this.setState({
 				accountId: this.props.accountId
 			});
-			this.forceUpdate();
 		}
 
 		let values = query.parse(this.props.location.search);
@@ -53,6 +52,11 @@ export class Form extends Component {
 				console.log(this.state.event);
 			})
 			.catch(console.error);
+
+		if (new Date() < this.state.event.formDate)
+		{
+			this.props.history.push("/");
+		}
 
 		await axios
 			.get(`/event/getForm?id=${values.id}`)

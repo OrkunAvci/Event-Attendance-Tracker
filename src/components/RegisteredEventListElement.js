@@ -6,27 +6,21 @@ class RegisteredEventListElement extends React.Component {
 	state = {
 		event: this.props.event,
 		eventLink: `/event?id=${this.props.event.id}`,
-		code: "",
+		code: null,
 		dateOptions: { year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' }
 	};
 
-	shouldComponentUpdate(prevProps){
-		return prevProps.email !== this.props.email;
-	}
-
 	componentDidMount(){
-		if (this.state.code === "")
-		{
-			axios
-			.get(`registration/getCode?email=${this.props.email}&eventId=${this.state.event.id}`)
+		axios
+			.get(
+				`registration/getCode?email=${this.props.email}&eventId=${this.state.event.id}`
+			)
 			.then((res) => {
 				this.setState({
-					code: res.data
+					code: res.data,
 				});
 			})
 			.catch(console.error);
-			this.forceUpdate();
-		}
 	}
 
 	render = () => {
@@ -35,7 +29,7 @@ class RegisteredEventListElement extends React.Component {
 				<Link to={this.state.eventLink} style={linkStyle}>
 					{this.state.event.name}
 				</Link>
-				<p style={pStyle}>{(this.state.code)}</p>
+				<p style={pStyle}>Your code for this event is <span sytle={codeStyle}>{this.state.code}</span></p>
 				<p style={pStyle}>Event starts at {(new Date(this.state.event.startDate)).toLocaleDateString('en-TR', this.state.dateOptions)}</p>
 				<p style={pStyle}>Created by {this.state.event.user.name + " " + this.state.event.user.surname}</p>
 			</li>
@@ -62,13 +56,18 @@ const liStyle = {
 
 const linkStyle = {
 	textDecoration: "none",
-	color: "white"
+	color: "white",
+	fontSize: "1.3rem"
 };
 
 const pStyle = {
 	textAlign: "left",
 	fontSize: "1rem",
-	margin: "16px"
+	margin: "8px"
 };
+
+const codeStyle = {
+	color: "red"
+}
 
 export default RegisteredEventListElement;
