@@ -10,7 +10,7 @@ class MailList extends React.Component {
 			? ""
 			:	this.props.list.map((ele) => {
 					return <MailListElement key={ele.email} ele={ele} />;
-			  })
+			  });
 	};
 }
 

@@ -64,6 +64,26 @@ class Event extends Component {
 			this.setState({
 				organizer: true
 			});
+
+			axios
+			.get(`whiteList/getWhitelist?id=${this.state.event.id}`)
+			.then((res) => {
+				this.setState({
+					whitelistList: res.data
+				});
+				console.log(res.data);
+			})
+			.catch(console.error);
+
+			axios
+			.get(`blackList/getBlacklist?id=${this.state.event.id}`)
+			.then((res) => {
+				this.setState({
+					blacklistList: res.data
+				});
+				console.log(res.data);
+			})
+			.catch(console.error);
 		}
 
 	}
@@ -79,18 +99,19 @@ class Event extends Component {
 				email: this.state.whitelist
 			})
 			.then((res) => {
-
+				console.log(res.data);
 			})
 			.catch((err) => {
 				console.error(err);
 			});
 		
 		axios
-			.get(`whitelist/getWhitelist?id=${this.state.event.id}`)
+			.get(`whiteList/getWhitelist?id=${this.state.event.id}`)
 			.then((res) => {
 				this.setState({
 					whitelistList: res.data
 				});
+				console.log(res.data);
 			})
 			.catch(console.error);
 	}
@@ -99,23 +120,24 @@ class Event extends Component {
 		e.preventDefault();
 
 		axios
-			.post(`blackList/addBlackList`, {
+			.post(`blackList/addBlacklist`, {
 				event: {id: this.state.event.id},
 				email: this.state.blacklist
 			})
 			.then((res) => {
-
+				console.log(res.data);
 			})
 			.catch((err) => {
 				console.error(err);
 			});
 		
 		axios
-			.get(`blacklist/getBlacklist?id=${this.state.event.id}`)
+			.get(`blackList/getBlacklist?id=${this.state.event.id}`)
 			.then((res) => {
 				this.setState({
 					blacklistList: res.data
 				});
+				console.log(res.data);
 			})
 			.catch(console.error);
 	}

@@ -8,7 +8,7 @@ class MailListElement extends React.Component {
 			<li style={liStyle}>
 				<Link to="#" style={linkStyle}>
 					{
-						this.props.reg.email
+						this.props.ele.email
 					}
 				</Link>
 			</li>
@@ -17,7 +17,7 @@ class MailListElement extends React.Component {
 }
 
 const liStyle = {
-	width: "auto",
+	width: "640px",
 	height: "auto",
 	margin: "auto",
 	padding: "20px 10px",
