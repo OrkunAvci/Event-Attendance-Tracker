@@ -122,13 +122,13 @@ export class Form extends Component {
 			<div style={containerStyle}>
 				<h2 style={headingStyle}>{(this.state.event === null) ? "" : this.state.event.name}</h2>
 				<form>
-					<label style={labeStyle}>Email</label>
+					<label style={labelStyle}>Email</label>
 					<input style={inputStyle} type="email" name="email" onChange={this.update_fields}/>
 					
 					{
 						(this.state.form !== null && this.state.form.formField.strField1) ?
 						<div>
-							<label style={labeStyle}>{this.state.form.formLabel.strField1}</label>
+							<label style={labelStyle}>{this.state.form.formLabel.strField1}</label>
 							<input style={inputStyle} type="text" name="strField1" onChange={this.update_fields}/>
 						</div> : ""
 					}
@@ -136,7 +136,7 @@ export class Form extends Component {
 					{
 						(this.state.form !== null && this.state.form.formField.strField2) ?
 						<div>
-							<label style={labeStyle}>{this.state.form.formLabel.strField2}</label>
+							<label style={labelStyle}>{this.state.form.formLabel.strField2}</label>
 							<input style={inputStyle} type="text" name="strField2" onChange={this.update_fields}/>
 						</div> : ""
 					}
@@ -144,7 +144,7 @@ export class Form extends Component {
 					{
 						(this.state.form !== null && this.state.form.formField.strField3) ?
 						<div>
-							<label style={labeStyle}>{this.state.form.formLabel.strField3}</label>
+							<label style={labelStyle}>{this.state.form.formLabel.strField3}</label>
 							<input style={inputStyle} type="text" name="strField3" onChange={this.update_fields}/>
 						</div> : ""
 					}
@@ -152,7 +152,7 @@ export class Form extends Component {
 					{
 						(this.state.form !== null && this.state.form.formField.intField1) ?
 						<div>
-							<label style={labeStyle}>{this.state.form.formLabel.intField1}</label>
+							<label style={labelStyle}>{this.state.form.formLabel.intField1}</label>
 							<input style={inputStyle} type="number" name="intField1" onChange={this.update_fields}/>
 						</div> : ""
 					}
@@ -160,7 +160,7 @@ export class Form extends Component {
 					{
 						(this.state.form !== null && this.state.form.formField.intField2) ?
 						<div>
-							<label style={labeStyle}>{this.state.form.formLabel.intField1}</label>
+							<label style={labelStyle}>{this.state.form.formLabel.intField1}</label>
 							<input style={inputStyle} type="number" name="intField2" onChange={this.update_fields}/>
 						</div> : ""
 					}
@@ -223,7 +223,7 @@ const headingStyle = {
 	marginTop: "10px"
 }
 
-const labeStyle = {
+const labelStyle = {
 	display : "block",
 	color: "rgba(255, 253, 228, 0.9)",
 	textAlign: "left"
