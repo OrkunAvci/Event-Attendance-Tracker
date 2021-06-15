@@ -12,7 +12,7 @@ export class Redirect extends Component {
 		output: ""
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		if (!(this.state.id === null || this.state.id === undefined)) {return;}
 
 		let values = query.parse(this.props.location.search);
@@ -28,10 +28,20 @@ export class Redirect extends Component {
 				});
 			})
 			.catch(console.error);
+		
+			if (values.email && values.code)
+			{
+				await this.setState({
+					email: values.email,
+					code: values.code
+				});
+				this.submit_code(null);
+				return;
+			}
 	}
 
 	submit_code = (e) => {
-		e.preventDefault();
+		if (e) {e.preventDefault();}
 
 		axios
 			.get(

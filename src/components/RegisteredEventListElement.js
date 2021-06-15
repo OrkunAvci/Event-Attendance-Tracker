@@ -26,7 +26,7 @@ class RegisteredEventListElement extends React.Component {
 	render = () => {
 		return (
 			<li style={liStyle}>
-				<Link to={this.state.eventLink} style={linkStyle}>
+				<Link to={(this.state.event && this.state.code) ? `/redirect?email=${this.props.email}&id=${this.state.event.id}&code=${this.state.code}` : "#"} style={linkStyle}>
 					{this.state.event.name}
 				</Link>
 				<p style={pStyle}>Your code for this event is <span sytle={codeStyle}>{this.state.code}</span></p>

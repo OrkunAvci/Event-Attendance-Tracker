@@ -59,9 +59,13 @@ class Event extends Component {
 				console.error(err);
 			});
 		
-		this.setState({
-			organizer: (this.state.event.user.id === this.state.accountId)
-		});
+		if (values.creator)
+		{
+			this.setState({
+				organizer: true
+			});
+		}
+
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
@@ -231,7 +235,7 @@ class Event extends Component {
 					</div>
 				</div>
 				{
-					(this.state.event && this.state.event.user.id !== this.props.accountId) ?
+					(this.state.event && this.state.creator) ?
 					<div style={listContainerStyle}>
 						<form>
 							<div style={labelStyle}>Whitelist</div>
@@ -242,7 +246,7 @@ class Event extends Component {
 					</div> : ""
 				}
 				{
-					(this.state.event && this.state.event.user.id !== this.props.accountId) ?
+					(this.state.event && this.state.creator) ?
 					<div style={listContainerStyle}>
 						<form>
 							<div style={labelStyle}>Blacklist</div>
