@@ -5,12 +5,14 @@ import { withRouter } from "react-router-dom";
 import query from "query-string";
 
 import RegisteredEventList from '../RegisteredEventList';
+import EventList from '../EventList';
 export class Account extends Component {
 	
 	state = {
 		id: 0,
 		user: null,
-		list: []
+		registered: [],
+		created: []
 	}
 
 	logout = () => {
@@ -44,12 +46,20 @@ export class Account extends Component {
 		.then((res)=>{
 			console.log(res.data)
 			this.setState({
-				list: res.data
+				registered: res.data
 			})
 		})
 		.catch((err)=>{
 			console.error(err);
 		})
+
+		await axios.get(`/event/findUserEvents?id=${this.state.user.id}`)
+			.then((res) => {
+				this.setState({
+					created: res.data
+				});
+			})
+			.catch(console.error);
 
 	}
 
@@ -59,28 +69,38 @@ export class Account extends Component {
 			<div>
 				<div style={userStyle}>
 					{
-						(this.state.user) ?
-						<h2>{this.state.user.name} {this.state.user.surname}</h2> : ""
+						(user) ?
+						<h2>{user.name} {user.surname}</h2> : ""
 					}
 
 					{
-						(this.state.user) ?
-						<p style={pStyle}>Registered Email: {this.state.user.email}</p> : ""
+						(user) ?
+						<p style={pStyle}>Registered Email: {user.email}</p> : ""
 					}
 
 					{
-						(this.state.user) ?
-						<p style={pStyle}>Organizer: {(this.state.user.organizer) ? "True" : "False"}</p> : ""
+						(user) ?
+						<p style={pStyle}>Organizer: {(user.organizer) ? "True" : "False"}</p> : ""
 					}
 
 					<button style={buttonStyle} type="submit" onClick={this.logout}>Logout</button>
 
 				</div>
 				<div style={eventContainerStyle}>
+					<h1>Created Events</h1>
 					<ul>
 						{
-							(this.state.user) ?
-							<RegisteredEventList list={list} email={this.state.user.email}/>
+							(user && user.organizer) ?
+							<EventList list={this.state.created} /> : ""
+						}
+					</ul>
+				</div>
+				<div style={eventContainerStyle}>
+					<h1>Registered Events</h1>
+					<ul>
+						{
+							(user) ?
+							<RegisteredEventList list={this.state.registered} email={user.email}/>
 							: ""
 						}
 					</ul>

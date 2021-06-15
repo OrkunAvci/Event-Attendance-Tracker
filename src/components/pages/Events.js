@@ -50,7 +50,7 @@ class Events extends React.Component {
 				{
 					(this.state.searched ===true && (!Array.isArray(this.state.list) || this.state.list.length === 0)) ? 
 					<div style={errorStyle}>No events with the name.</div> :
-					<EventList list={this.state.list}/>
+					<EventList list={this.state.list} />
 				}
 			</div>
 		)

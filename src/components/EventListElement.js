@@ -11,7 +11,7 @@ class EventListElement extends React.Component {
 	render = () => {
 		return (
 			<li style={liStyle}>
-				<Link to={this.state.eventLink} style={linkStyle}>
+				<Link to={`/event?id=${this.props.event.id}&creator=true`} style={linkStyle}>
 					{this.state.event.name}
 				</Link>
 				<p style={pStyle}>{this.state.event.description}</p>

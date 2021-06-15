@@ -235,7 +235,7 @@ class Event extends Component {
 					</div>
 				</div>
 				{
-					(this.state.event && this.state.creator) ?
+					(this.state.event && this.state.organizer) ?
 					<div style={listContainerStyle}>
 						<form>
 							<div style={labelStyle}>Whitelist</div>
@@ -246,7 +246,7 @@ class Event extends Component {
 					</div> : ""
 				}
 				{
-					(this.state.event && this.state.creator) ?
+					(this.state.event && this.state.organizer) ?
 					<div style={listContainerStyle}>
 						<form>
 							<div style={labelStyle}>Blacklist</div>
