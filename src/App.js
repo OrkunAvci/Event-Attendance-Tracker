@@ -67,7 +67,11 @@ class App extends Component {
 							/>
 						</Route>
 
-						<Route exact={true} path="/event" component={Event} />
+						<Route exact={true} path="/event">
+							<Event
+							accountId={this.accoundId}
+							/>
+						</Route>
 
 						<Route exact={true} path="/form">
 							<Form accoundId={this.state.accountId} />

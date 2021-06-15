@@ -4,6 +4,7 @@ import axios from "axios";
 import query from "query-string";
 
 import UserList from "../UserList";
+import MailList from "../MailList";
 
 class Event extends Component {
 	state = {
@@ -21,8 +22,10 @@ class Event extends Component {
 		attended: null,
 		didNotAttend: null,
 		whitelist: "",
+		whitelistList: [],
 		whitelistOutput: "",
 		blacklist: "",
+		blacklistList: [],
 		blacklistOutput: ""
 	};
 
@@ -76,23 +79,41 @@ class Event extends Component {
 			})
 			.catch((err) => {
 				console.error(err);
+			});
+		
+		axios
+			.get(`whitelist/getWhitelist?id=${this.state.event.id}`)
+			.then((res) => {
+				this.setState({
+					whitelistList: res.data
+				});
 			})
+			.catch(console.error);
 	}
 
-	addBlacklsit = (e) => {
+	addBlacklist = (e) => {
 		e.preventDefault();
 
 		axios
 			.post(`blackList/addBlackList`, {
 				event: {id: this.state.event.id},
-				email: this.state.whitelist
+				email: this.state.blacklist
 			})
 			.then((res) => {
 
 			})
 			.catch((err) => {
 				console.error(err);
+			});
+		
+		axios
+			.get(`blacklist/getBlacklist?id=${this.state.event.id}`)
+			.then((res) => {
+				this.setState({
+					blacklistList: res.data
+				});
 			})
+			.catch(console.error);
 	}
 
 	render = () => {
@@ -209,20 +230,28 @@ class Event extends Component {
 						)}
 					</div>
 				</div>
-				<div style={listContainerStyle}>
+				{
+					(this.state.event && this.state.event.user.id !== this.props.accountId) ?
+					<div style={listContainerStyle}>
 						<form>
 							<div style={labelStyle}>Whitelist</div>
 							<input type="text" name="whitelist" onChange={this.update_fields} />
 							<button type="submit" onClick={this.addWhitelist}>Add Email</button>
 						</form>
-				</div>
-				<div style={listContainerStyle}>
+						<MailList list={this.state.whitelistList} />
+					</div> : ""
+				}
+				{
+					(this.state.event && this.state.event.user.id !== this.props.accountId) ?
+					<div style={listContainerStyle}>
 						<form>
 							<div style={labelStyle}>Blacklist</div>
 							<input type="text" name="blacklist" onChange={this.update_fields} />
 							<button type="submit" onClick={this.addBlacklist}>Add Email</button>
 						</form>
-				</div>
+						<MailList list={this.state.blacklistList} />
+					</div> : ""
+				}
 				{
 					(this.state.event && (new Date() > new Date(this.state.event.formDate)) && (new Date() < new Date(this.state.event.startDate))) ?
 					<div>
@@ -284,11 +313,10 @@ const listContainerStyle = {
 	height: "auto",
 	width: "1440px",
 	margin: "auto",
-	padding: "40px 70px",
+	padding: "20px 50px",
 	boxSizing: "border-box",
 	display: "block",
 	position: "relative",
-	marginTop: "100px",
 	marginBottom: "50px",
 	background:
 		"linear-gradient(135deg, rgba(0, 217, 255, 0.536) 0%, rgba(48, 48, 48, 0.79) 10%, rgba(48, 48, 48, 0.79) 90%, rgba(153, 0, 255, 0.6) 100%)",
