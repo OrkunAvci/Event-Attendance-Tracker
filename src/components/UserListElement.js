@@ -6,7 +6,7 @@ class UserListElement extends React.Component {
 	render = () => {
 		return (
 			<li style={liStyle}>
-				<Link to={(this.props.creator) ? `#` : "#"} style={linkStyle}>
+				<Link to={(this.props.reg) ? `log/?id=${this.props.reg.event.id}&email=${this.props.reg.email}` : "#"} style={linkStyle}>
 					{
 						this.props.reg.email
 					}
