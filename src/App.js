@@ -14,6 +14,7 @@ import Form from "./components/pages/Form";
 import Redirect from "./components/pages/Redirect";
 import CreateEvent from "./components/pages/CreateEvent";
 import Analytics from './components/pages/Analytics';
+import Log from './components/pages/Log';
 import Signup from './components/pages/Signup';
 
 import "./App.css";
@@ -86,6 +87,10 @@ class App extends Component {
 
 						<Route exact={true} path="/analytics" >
 							<Analytics/>
+						</Route>
+
+						<Route exact={true} path="/log" >
+							<Log/>
 						</Route>
 
 						<Route exact={true} path="/signup" component={Signup} />
