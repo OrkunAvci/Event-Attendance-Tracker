@@ -20,7 +20,7 @@ export class Redirect extends Component {
 			id: values.id
 		});
 
-		axios
+		await axios
 			.get(`/event/getEventById?id=${values.id}`)
 			.then((res) => {
 				this.setState({
@@ -29,11 +29,10 @@ export class Redirect extends Component {
 			})
 			.catch(console.error);
 		
-			if (values.email && values.code)
-			{
+			if (values.email && values.code && this.state.redirection !== "") {
 				await this.setState({
 					email: values.email,
-					code: values.code
+					code: values.code,
 				});
 				this.submit_code(null);
 				return;

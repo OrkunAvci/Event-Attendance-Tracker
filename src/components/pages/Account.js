@@ -6,6 +6,7 @@ import query from "query-string";
 
 import RegisteredEventList from '../RegisteredEventList';
 import EventList from '../EventList';
+import CreatedEventList from '../CreatedEventList';
 export class Account extends Component {
 	
 	state = {
@@ -68,45 +69,59 @@ export class Account extends Component {
 		return (
 			<div>
 				<div style={userStyle}>
-					{
-						(user) ?
-						<h2>{user.name} {user.surname}</h2> : ""
-					}
+					{user ? (
+						<h2>
+							{user.name} {user.surname}
+						</h2>
+					) : (
+						""
+					)}
 
-					{
-						(user) ?
-						<p style={pStyle}>Registered Email: {user.email}</p> : ""
-					}
+					{user ? <p style={pStyle}>Registered Email: {user.email}</p> : ""}
 
-					{
-						(user) ?
-						<p style={pStyle}>Organizer: {(user.organizer) ? "True" : "False"}</p> : ""
-					}
+					{user ? (
+						<p style={pStyle}>Organizer: {user.organizer ? "True" : "False"}</p>
+					) : (
+						""
+					)}
 
-					<button style={buttonStyle} type="submit" onClick={this.logout}>Logout</button>
-
+					<button style={buttonStyle} type="submit" onClick={this.logout}>
+						Logout
+					</button>
 				</div>
 				<div style={eventContainerStyle}>
-					<h1>Created Events</h1>
+					{
+						user && user.organizer ?
+							<div style={headerStyle}>
+								<div>Created Events</div>
+								________________________________________________________________________
+							</div> : ""
+					}
 					<ul>
 						{
-							(user && user.organizer) ?
-							<EventList list={this.state.created} /> : ""
+							user && user.organizer ?
+								<CreatedEventList list={this.state.created} /> : ""
 						}
 					</ul>
 				</div>
 				<div style={eventContainerStyle}>
-					<h1>Registered Events</h1>
+					<div style={headerStyle}>
+						<div style={{margin: "0"}}>Registered Events</div>
+						______________________________________________________________________________
+					</div>
 					<ul>
-						{
-							(user) ?
-							<RegisteredEventList list={this.state.registered} email={user.email}/>
-							: ""
-						}
+						{user ? (
+							<RegisteredEventList
+								list={this.state.registered}
+								email={user.email}
+							/>
+						) : (
+							""
+						)}
 					</ul>
 				</div>
 			</div>
-		)
+		);
 	}
 }
 
@@ -119,7 +134,7 @@ const userStyle = {
 	display: "block",
 	position: "relative",
 	marginTop: "100px",
-	marginBottom: "100px",
+	marginBottom: "50px",
 	background: "linear-gradient(135deg, rgba(0, 217, 255, 0.536) 0%, rgba(48, 48, 48, 0.79) 10%, rgba(48, 48, 48, 0.79) 90%, rgba(153, 0, 255, 0.6) 100%)",
 	borderRadius: "48px",
 	color: "white"
@@ -127,6 +142,14 @@ const userStyle = {
 
 const eventContainerStyle = {
 }
+
+const headerStyle = {
+	fontSize: "1.5rem",
+	color: "black",
+	marginBottom: "12px",
+	marginTop: "48px",
+	fontWeight: "bold"
+};
 
 const pStyle = {
 	textAlign: "left",

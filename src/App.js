@@ -13,6 +13,7 @@ import Event from "./components/pages/Event";
 import Form from "./components/pages/Form";
 import Redirect from "./components/pages/Redirect";
 import CreateEvent from "./components/pages/CreateEvent";
+import Analytics from './components/pages/Analytics';
 import Signup from './components/pages/Signup';
 
 import "./App.css";
@@ -81,6 +82,10 @@ class App extends Component {
 
 						<Route exact={true} path="/createEvent">
 							<CreateEvent accountId={this.state.accountId} />
+						</Route>
+
+						<Route exact={true} path="/analytics" >
+							<Analytics/>
 						</Route>
 
 						<Route exact={true} path="/signup" component={Signup} />

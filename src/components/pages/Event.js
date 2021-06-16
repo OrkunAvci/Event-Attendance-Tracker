@@ -23,10 +23,8 @@ class Event extends Component {
 		didNotAttend: null,
 		whitelist: "",
 		whitelistList: [],
-		whitelistOutput: "",
 		blacklist: "",
 		blacklistList: [],
-		blacklistOutput: ""
 	};
 
 	async componentDidMount() {
@@ -49,7 +47,7 @@ class Event extends Component {
 				this.setState({
 					list: res.data,
 					attended: res.data.filter((ele) => ele.attended === true),
-					didNotAttend: res.data.filter((ele) => ele.attended !== true)
+					didNotAttend: res.data.filter((ele) => ele.attended !== true),
 				});
 				console.log(this.state.list);
 				console.log(this.state.attended);
@@ -58,45 +56,27 @@ class Event extends Component {
 			.catch((err) => {
 				console.error(err);
 			});
-		
-		if (values.creator)
-		{
+
+		if (values.creator) {
 			this.setState({
-				organizer: true
+				organizer: true,
 			});
 
-			axios
-			.get(`whiteList/getWhitelist?id=${this.state.event.id}`)
-			.then((res) => {
-				this.setState({
-					whitelistList: res.data
-				});
-				console.log(res.data);
-			})
-			.catch(console.error);
-
-			axios
-			.get(`blackList/getBlacklist?id=${this.state.event.id}`)
-			.then((res) => {
-				this.setState({
-					blacklistList: res.data
-				});
-				console.log(res.data);
-			})
-			.catch(console.error);
+			this.updateLists();
 		}
-
 	}
 
-	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
+	update_fields = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+	};
 
-	addWhitelist = (e) => {
+	addWhitelist = async (e) => {
 		e.preventDefault();
 
-		axios
+		await axios
 			.post(`whiteList/addWhiteList`, {
-				event: {id: this.state.event.id},
-				email: this.state.whitelist
+				event: { id: this.state.event.id },
+				email: this.state.whitelist,
 			})
 			.then((res) => {
 				console.log(res.data);
@@ -104,38 +84,64 @@ class Event extends Component {
 			.catch((err) => {
 				console.error(err);
 			});
+
+		this.updateLists();
+	};
+
+	deleteWhitelist= async (e, email) => {
+		e.preventDefault();
+
+		axios
+			.post(`whitelist/deleteWhiteList?eventId=${this.state.event.id}&email=${email}`)
+			.catch(console.error);
+
+		this.updateLists();
+	}
+
+	addBlacklist = async (e) => {
+		e.preventDefault();
+
+		await axios
+			.post(`blackList/addBlacklist`, {
+				event: { id: this.state.event.id },
+				email: this.state.blacklist,
+			})
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+
+		this.updateLists();
+	};
+
+	deleteBlacklist= async (e, email) => {
+		e.preventDefault();
 		
+		axios
+			.post(`blacklist/deleteBlackList?eventId=${this.state.event.id}&email=${email}`)
+			.catch(console.error);
+		
+		this.updateLists();
+	}
+
+	updateLists(){
 		axios
 			.get(`whiteList/getWhitelist?id=${this.state.event.id}`)
 			.then((res) => {
 				this.setState({
-					whitelistList: res.data
+					whitelistList: res.data,
 				});
 				console.log(res.data);
 			})
 			.catch(console.error);
-	}
-
-	addBlacklist = (e) => {
-		e.preventDefault();
-
-		axios
-			.post(`blackList/addBlacklist`, {
-				event: {id: this.state.event.id},
-				email: this.state.blacklist
-			})
-			.then((res) => {
-				console.log(res.data);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
 		
 		axios
 			.get(`blackList/getBlacklist?id=${this.state.event.id}`)
 			.then((res) => {
 				this.setState({
-					blacklistList: res.data
+					blacklistList: res.data,
 				});
 				console.log(res.data);
 			})
@@ -256,30 +262,45 @@ class Event extends Component {
 						)}
 					</div>
 				</div>
-				{
-					(this.state.event && this.state.organizer) ?
+				{this.state.event && this.state.organizer ? (
 					<div style={listContainerStyle}>
 						<form>
 							<div style={labelStyle}>Whitelist</div>
-							<input type="text" name="whitelist" onChange={this.update_fields} />
-							<button type="submit" onClick={this.addWhitelist}>Add Email</button>
+							<input
+								type="text"
+								name="whitelist"
+								onChange={this.update_fields}
+							/>
+							<button type="submit" onClick={this.addWhitelist}>
+								Add Email
+							</button>
 						</form>
-						<MailList list={this.state.whitelistList} />
-					</div> : ""
-				}
-				{
-					(this.state.event && this.state.organizer) ?
+						<MailList list={this.state.whitelistList} color={"w"} org={true} deleteMail={this.deleteWhitelist} />
+					</div>
+				) : (
+					""
+				)}
+				{this.state.event && this.state.organizer ? (
 					<div style={listContainerStyle}>
 						<form>
 							<div style={labelStyle}>Blacklist</div>
-							<input type="text" name="blacklist" onChange={this.update_fields} />
-							<button type="submit" onClick={this.addBlacklist}>Add Email</button>
+							<input
+								type="text"
+								name="blacklist"
+								onChange={this.update_fields}
+							/>
+							<button type="submit" onClick={this.addBlacklist}>
+								Add Email
+							</button>
 						</form>
-						<MailList list={this.state.blacklistList} />
-					</div> : ""
-				}
-				{
-					(this.state.event && (new Date() > new Date(this.state.event.formDate)) && (new Date() < new Date(this.state.event.startDate))) ?
+						<MailList list={this.state.blacklistList} color={"b"} org={true} deleteMail={this.deleteBlacklist} />
+					</div>
+				) : (
+					""
+				)}
+				{this.state.event &&
+				new Date() > new Date(this.state.event.formDate) &&
+				new Date() < new Date(this.state.event.startDate) ? (
 					<div>
 						<h1 style={headerStyle}>
 							Registrations
@@ -288,32 +309,9 @@ class Event extends Component {
 						</h1>
 						<UserList list={this.state.list} />
 					</div>
-					: ""
-				}
-				{
-					(this.state.event && (new Date() > new Date(this.state.event.startDate))) ?
-					<div>
-						<h1 style={headerStyle}>
-							Attended List
-							<br />
-							____________________________________________________________________________________________________
-						</h1>
-						<UserList list={this.state.attended} />
-					</div>
-					: ""
-				}
-				{
-					(this.state.event && (new Date() > new Date(this.state.event.startDate))) ?
-					<div>
-						<h1 style={headerStyle}>
-							Did Not Attend List
-							<br />
-							____________________________________________________________________________________________________
-						</h1>
-						<UserList list={this.state.didNotAttend} />
-					</div>
-					: ""
-				}
+				) : (
+					""
+				)}
 			</div>
 		);
 	};
@@ -348,7 +346,7 @@ const listContainerStyle = {
 		"linear-gradient(135deg, rgba(0, 217, 255, 0.536) 0%, rgba(48, 48, 48, 0.79) 10%, rgba(48, 48, 48, 0.79) 90%, rgba(153, 0, 255, 0.6) 100%)",
 	borderRadius: "48px",
 	color: "white",
-}
+};
 
 const infoStyle = {
 	height: "auto",
@@ -361,10 +359,12 @@ const infoStyle = {
 };
 
 const labelStyle = {
-	display : "block",
+	display: "block",
 	color: "rgba(255, 253, 228, 0.9)",
-	textAlign: "left"
-}
+	textAlign: "middle",
+	fontSize: "1.3rem",
+	marginBottom: "6px"
+};
 
 const pStyle = {
 	textAlign: "left",
@@ -379,8 +379,8 @@ const p2Style = {
 const headerStyle = {
 	fontSize: "1.3rem",
 	color: "black",
-	marginBottom: "20px"
-}
+	marginBottom: "20px",
+};
 
 const buttonStyle = {
 	width: "350px",

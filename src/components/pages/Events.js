@@ -25,10 +25,8 @@ class Events extends React.Component {
 			.then((res) => {
 				console.log(res.data);
 				this.setState({
-					list: res.data,
+					list: res.data.filter((eve) => ( (new Date() < new Date(eve.formDate)) || ( (new Date() > new Date(eve.startDate)) && (new Date() < new Date(eve.endDate)) ) ))
 				});
-				this.state.list.filter((eve) => ( (new Date() < eve.formDate) ));
-				console.log(this.state.list);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -68,7 +66,7 @@ const searchContainerStyle = {
 	marginTop: "50px",
 	marginBottom: "70px",
 	background:
-		"linear-gradient(45deg, rgba(0, 217, 255, 0.436) 0%, rgb(48, 48, 48, 0.79) 20%, rgba(48, 48, 48, 0.79) 80%, rgba(153, 0, 255, 0.5) 100%)",
+		"linear-gradient(45deg, rgba(0, 217, 255, 0.436) 0%, rgb(48, 48, 48, 0.79) 15%, rgba(48, 48, 48, 0.79) 85%, rgba(153, 0, 255, 0.5) 100%)",
 	borderRadius: "48px",
 	textAlign: "middle",
 	color: "white"

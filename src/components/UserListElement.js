@@ -26,7 +26,7 @@ const liStyle = {
 	position: "relative",
 	marginBottom: "20px",
 	background:
-		"linear-gradient(45deg, rgba(0, 217, 255, 0.536) 0%, rgba(48, 48, 48, 0.79) 8%, rgba(48, 48, 48, 0.79) 92%, rgba(153, 0, 255, 0.6) 100%)",
+		"linear-gradient(45deg, rgba(0, 217, 255, 0.536) 0%, rgba(48, 48, 48, 0.79) 7%, rgba(48, 48, 48, 0.79) 93%, rgba(153, 0, 255, 0.6) 100%)",
 	borderRadius: "48px",
 	color: "white",
 	lineSpacing: "30px",

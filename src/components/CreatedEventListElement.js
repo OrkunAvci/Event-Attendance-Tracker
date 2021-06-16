@@ -1,38 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class EventListElement extends React.Component {
+class CreatedEventListElement extends React.Component {
 	state = {
 		event: this.props.event,
-		dateOptions: { year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' }
+		dateOptions: {
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+			hour: "numeric",
+			minute: "numeric",
+		},
 	};
 
 	render = () => {
 		return (
 			<li style={liStyle}>
-				<Link to={`/event?id=${this.props.event.id}`} style={linkStyle}>
+				<Link
+					to={
+						this.props.event
+							? new Date() < new Date(this.props.event.startDate)
+								? `/event?id=${this.props.event.id}` + ((new Date() < new Date(this.state.event.formDate)) ? "&creator=true" : "")
+								: `/analytics?id=${this.props.event.id}`
+							: "#"
+					}
+					style={linkStyle}
+				>
 					{this.state.event.name}
 				</Link>
-				<p style={pStyle}>{this.state.event.description}</p>
 				<p style={pStyle}>
-					You can register to this event until{" "}
-					{new Date(this.state.event.formDate).toLocaleDateString(
-						"en-TR",
-						this.state.dateOptions
-					)}
-					.
-				</p>
-				<p style={pStyle}>
-					Event starts at{" "}
+					Event time:{" "}
 					{new Date(this.state.event.startDate).toLocaleDateString(
 						"en-TR",
 						this.state.dateOptions
+					)}{" "}
+					-{" "}
+					{new Date(this.state.event.endDate).toLocaleDateString(
+						"en-TR",
+						this.state.dateOptions
 					)}
 					.
-				</p>
-				<p style={p2Style}>
-					Created by{" "}
-					{this.state.event.user.name + " " + this.state.event.user.surname}.
 				</p>
 			</li>
 		);
@@ -40,7 +47,7 @@ class EventListElement extends React.Component {
 }
 
 const liStyle = {
-	width: "1280px",
+	width: "1080px",
 	height: "auto",
 	margin: "auto",
 	padding: "20px 100px",
@@ -53,23 +60,18 @@ const liStyle = {
 	borderRadius: "48px",
 	color: "white",
 	lineSpacing: "30px",
-	fontSize: "1rem"
+	fontSize: "1rem",
 };
 
 const linkStyle = {
 	textDecoration: "none",
 	color: "white",
-	fontSize: "1.3rem"
+	fontSize: "1.3rem",
 };
 
 const pStyle = {
 	textAlign: "left",
-	margin: "16px"
+	margin: "8px 16px",
 };
 
-const p2Style = {
-	textAlign: "right",
-	margin: "16px"
-};
-
-export default EventListElement;
+export default CreatedEventListElement;
