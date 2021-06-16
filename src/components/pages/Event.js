@@ -19,8 +19,6 @@ class Event extends Component {
 			minute: "numeric",
 		},
 		list: null,
-		attended: null,
-		didNotAttend: null,
 		whitelist: "",
 		whitelistList: [],
 		blacklist: "",
@@ -45,13 +43,9 @@ class Event extends Component {
 			.get(`registration/getRegistrations?id=${values.id}`)
 			.then((res) => {
 				this.setState({
-					list: res.data,
-					attended: res.data.filter((ele) => ele.attended === true),
-					didNotAttend: res.data.filter((ele) => ele.attended !== true),
+					list: res.data
 				});
 				console.log(this.state.list);
-				console.log(this.state.attended);
-				console.log(this.state.didNotAttend);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -61,8 +55,7 @@ class Event extends Component {
 			this.setState({
 				organizer: true,
 			});
-
-			await this.updateLists();
+			this.updateLists();
 		}
 	}
 
