@@ -64,11 +64,12 @@ export class Account extends Component {
 		this.props.logout();
 		this.props.history.push(`/`);
 	}
+
 	setCompany = (e) => {
 		e.preventDefault();
-		
+
 		axios
-			.post(`user/setCompany?company=${this.state.company}`)
+			.post(`user/setCompany?userId=${this.state.id}&company=${this.state.company}`)
 			.catch(console.error);
 		
 		this.setState({
@@ -116,10 +117,10 @@ export class Account extends Component {
 							{
 								(user.company) ?
 									user.company :
-									<form>
+									<div style={{display: "inline"}}>
 										<input style={inputStyle} type="text" name="company" onChange={this.update_fields} />
 										<button style={buttonStyle} type="submit" onClick={this.setCompany} >Set Company</button>
-									</form> 
+									</div>
 							}
 						</p> : ""
 					}
@@ -165,7 +166,7 @@ export class Account extends Component {
 }
 
 const userStyle = {
-	height: "300px",
+	height: "auto",
 	width: "1440px",
 	margin: "auto",
 	padding: "40px 70px",
@@ -196,11 +197,11 @@ const pStyle = {
 }
 
 const inputStyle = {
-	display : "inline",
-	margin: "0",
+	display : "inline-block",
+	margin: "0 12px",
 	borderRadius: "6px",
 	border: "0",
-	width: "50px",
+	width: "200px",
 	height: "20px",
 	padding: "0px 5px"
 }
@@ -210,8 +211,8 @@ const buttonStyle = {
 	padding: "5px 15px",
 	borderRadius: "6px",
 	border: "0",
-	marginTop: "40px",
-	marginBottom: "20px",
+	marginTop: "0px",
+	marginBottom: "30px",
 	position: "relative",
 	left: "0"
 }

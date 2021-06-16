@@ -62,7 +62,7 @@ class Event extends Component {
 				organizer: true,
 			});
 
-			this.updateLists();
+			await this.updateLists();
 		}
 	}
 
@@ -88,8 +88,7 @@ class Event extends Component {
 		this.updateLists();
 	};
 
-	deleteWhitelist= async (e, email) => {
-		e.preventDefault();
+	deleteWhitelist= async (email) => {
 
 		axios
 			.post(`whitelist/deleteWhiteList?eventId=${this.state.event.id}&email=${email}`)
@@ -116,18 +115,17 @@ class Event extends Component {
 		this.updateLists();
 	};
 
-	deleteBlacklist= async (e, email) => {
-		e.preventDefault();
+	deleteBlacklist= async (email) => {
 		
 		axios
 			.post(`blacklist/deleteBlackList?eventId=${this.state.event.id}&email=${email}`)
 			.catch(console.error);
 		
-		this.updateLists();
+		await this.updateLists();
 	}
 
-	updateLists(){
-		axios
+	async updateLists(){
+		await axios
 			.get(`whiteList/getWhitelist?id=${this.state.event.id}`)
 			.then((res) => {
 				this.setState({
@@ -137,7 +135,7 @@ class Event extends Component {
 			})
 			.catch(console.error);
 		
-		axios
+		await axios
 			.get(`blackList/getBlacklist?id=${this.state.event.id}`)
 			.then((res) => {
 				this.setState({
@@ -267,11 +265,12 @@ class Event extends Component {
 						<form>
 							<div style={labelStyle}>Whitelist</div>
 							<input
+								style={inputStyle}
 								type="text"
 								name="whitelist"
 								onChange={this.update_fields}
 							/>
-							<button type="submit" onClick={this.addWhitelist}>
+							<button style={button2Style} type="submit" onClick={this.addWhitelist}>
 								Add Email
 							</button>
 						</form>
@@ -285,11 +284,12 @@ class Event extends Component {
 						<form>
 							<div style={labelStyle}>Blacklist</div>
 							<input
+								style={inputStyle}
 								type="text"
 								name="blacklist"
 								onChange={this.update_fields}
 							/>
-							<button type="submit" onClick={this.addBlacklist}>
+							<button style={button2Style} type="submit" onClick={this.addBlacklist}>
 								Add Email
 							</button>
 						</form>
@@ -381,6 +381,26 @@ const headerStyle = {
 	color: "black",
 	marginBottom: "20px",
 };
+
+const inputStyle = {
+	display : "inline-block",
+	margin: "0 12px",
+	borderRadius: "6px",
+	border: "0",
+	width: "350px",
+	height: "20px",
+	padding: "0px 5px"
+}
+
+const button2Style = {
+	display: "inline",
+	padding: "5px 15px",
+	borderRadius: "6px",
+	border: "0",
+	margin: "12px 8px",
+	position: "relative",
+	left: "0"
+}
 
 const buttonStyle = {
 	width: "350px",
