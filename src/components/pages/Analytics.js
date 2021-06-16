@@ -45,7 +45,9 @@ class Analytics extends React.Component {
 		return (
 			<div style={mainContainerStyle}>
 				<div style={topContainerStyle}>
-
+					<div>
+						Some random text.
+					</div>
 				</div>
 				<div style={bottomContainerStyle}>
 					{
@@ -76,9 +78,24 @@ class Analytics extends React.Component {
 	}
 }
 
-const mainContainerStyle = {};
+const mainContainerStyle = {
+};
 
-const topContainerStyle = {};
+const topContainerStyle = {
+	height: "auto",
+	width: "1080px",
+	margin: "auto",
+	padding: "42px 100px",
+	boxSizing: "border-box",
+	display: "block",
+	position: "relative",
+	marginTop: "100px",
+	marginBottom: "50px",
+	background:
+		"linear-gradient(135deg, rgba(0, 217, 255, 0.536) 0%, rgba(48, 48, 48, 0.79) 10%, rgba(48, 48, 48, 0.79) 90%, rgba(153, 0, 255, 0.6) 100%)",
+	borderRadius: "48px",
+	color: "white",
+};
 
 const bottomContainerStyle = {};
 
