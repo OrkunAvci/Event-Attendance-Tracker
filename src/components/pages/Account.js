@@ -13,14 +13,10 @@ export class Account extends Component {
 		id: 0,
 		user: null,
 		registered: [],
-		created: []
+		created: [],
+		company: ""
 	}
 
-	logout = () => {
-		this.props.logout();
-		this.props.history.push(`/`);
-	}
-	
 	async componentDidMount(){
 
 		if (this.state.id !== 0)
@@ -64,26 +60,69 @@ export class Account extends Component {
 
 	}
 
+	logout = () => {
+		this.props.logout();
+		this.props.history.push(`/`);
+	}
+	setCompany = (e) => {
+		e.preventDefault();
+		
+		axios
+			.post(`user/setCompany?company=${this.state.company}`)
+			.catch(console.error);
+		
+		this.setState({
+			user: {
+				...this.state.user,
+				company: this.state.company
+			}
+		});
+	}
+	
+	update_fields = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+	};
+
 	render() {
 		const {user, list} = this.state;
 		return (
 			<div>
 				<div style={userStyle}>
-					{user ? (
-						<h2>
-							{user.name} {user.surname}
-						</h2>
-					) : (
-						""
-					)}
+					{
+						user ? 
+							<h2>
+								{user.name} {user.surname}
+							</h2> : ""
+					}
 
-					{user ? <p style={pStyle}>Registered Email: {user.email}</p> : ""}
+					{
+						user ?
+							<p style={pStyle}>
+								Registered Email: {user.email}
+							</p> : ""
+					}
 
-					{user ? (
-						<p style={pStyle}>Organizer: {user.organizer ? "True" : "False"}</p>
-					) : (
-						""
-					)}
+					{
+						user ?
+						<p style={pStyle}>
+							Organizer: {user.organizer ? "True" : "False"}
+						</p> : ""
+					}
+
+					{
+						user ?
+						<p style={pStyle}>
+							Company: 
+							{
+								(user.company) ?
+									user.company :
+									<form>
+										<input style={inputStyle} type="text" name="company" onChange={this.update_fields} />
+										<button style={buttonStyle} type="submit" onClick={this.setCompany} >Set Company</button>
+									</form> 
+							}
+						</p> : ""
+					}
 
 					<button style={buttonStyle} type="submit" onClick={this.logout}>
 						Logout
@@ -141,29 +180,40 @@ const userStyle = {
 }
 
 const eventContainerStyle = {
+	marginTop: "36px"
 }
 
 const headerStyle = {
 	fontSize: "1.5rem",
 	color: "black",
-	marginBottom: "12px",
-	marginTop: "48px",
+	margin: "12px 0",
 	fontWeight: "bold"
-};
+}
 
 const pStyle = {
 	textAlign: "left",
 	margin: "16px"
 }
 
+const inputStyle = {
+	display : "inline",
+	margin: "0",
+	borderRadius: "6px",
+	border: "0",
+	width: "50px",
+	height: "20px",
+	padding: "0px 5px"
+}
+
 const buttonStyle = {
+	display: "inline",
 	padding: "5px 15px",
 	borderRadius: "6px",
 	border: "0",
 	marginTop: "40px",
 	marginBottom: "20px",
 	position: "relative",
-	left: "auto"
+	left: "0"
 }
 
 export default withRouter(Account);
