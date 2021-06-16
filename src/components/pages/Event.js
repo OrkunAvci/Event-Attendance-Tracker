@@ -84,7 +84,7 @@ class Event extends Component {
 	deleteWhitelist= async (email) => {
 
 		axios
-			.post(`whitelist/deleteWhiteList?eventId=${this.state.event.id}&email=${email}`)
+			.post(`whiteList/deleteWhiteList?id=${this.state.event.id}&email=${email}`)
 			.catch(console.error);
 
 		this.updateLists();
@@ -111,7 +111,7 @@ class Event extends Component {
 	deleteBlacklist= async (email) => {
 		
 		axios
-			.post(`blacklist/deleteBlackList?eventId=${this.state.event.id}&email=${email}`)
+			.post(`blackList/deleteBlackList?id=${this.state.event.id}&email=${email}`)
 			.catch(console.error);
 		
 		await this.updateLists();

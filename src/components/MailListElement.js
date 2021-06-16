@@ -3,8 +3,13 @@ import { Link, withRouter } from "react-router-dom";
 
 class MailListElement extends React.Component {
 
+	constructor(props)
+	{
+		super(props);
+		this.deleteMail = this.props.deleteMail.bind(this);
+	}
 
-	deleteMail(e){
+	click = (e) => {
 		e.preventDefault();
 		this.props.deleteMail(this.props.ele.email);
 	}
@@ -17,7 +22,7 @@ class MailListElement extends React.Component {
 						this.props.ele.email
 					}
 				</Link>
-				<button style={buttonStyle} type="submit" onClick={this.deleteMail} >X</button>
+				<button style={buttonStyle} type="submit" onClick={this.click} >X</button>
 			</li>
 		);
 	};
