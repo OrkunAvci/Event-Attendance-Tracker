@@ -43,8 +43,8 @@ class CreateEvent extends React.Component {
 			.catch(console.error);
 
 		await this.setState({
-			blacklist: (this.state.blacklist === "") ? this.state.blacklist.split(',') : [],
-			whitelist: (this.state.whitelist === "") ? this.state.whitelist.split(',') : []
+			blacklist: (this.state.blacklist !== "") ? this.state.blacklist.split(',') : [],
+			whitelist: (this.state.whitelist !== "") ? this.state.whitelist.split(',') : []
 		});
 
 		console.log(this.state.blacklist);
@@ -87,6 +87,38 @@ class CreateEvent extends React.Component {
 				},
 			})
 			.then((res) => {
+
+				let i;
+				for (i = 0; i < this.state.whitelist.length; i++)
+				{
+					axios
+						.post(`whiteList/addWhiteList`, {
+							event: { id: res.data },
+							email: this.state.whitelist[i],
+						})
+						.then((res) => {
+							console.log(res.data);
+						})
+						.catch((err) => {
+							console.error(err);
+						});
+				}
+
+				this.state.blacklist.foreach((ele) => {
+					axios
+						.post(`blacklist/addBlackList`, {
+							event: { id: res.data },
+							email: ele,
+						})
+						.then((res) => {
+							console.log(res.data);
+						})
+						.catch((err) => {
+							console.error(err);
+						});
+				});
+
+
 				this.setState({
 					output:
 						"Event has been registered. You can search it up in Events page.",
