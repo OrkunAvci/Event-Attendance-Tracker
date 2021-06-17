@@ -25,7 +25,8 @@ class CreateEvent extends React.Component {
 		blacklist: "",
 		whitelist: "",
 		user: null,
-		output: ""
+		output: "",
+		question: ["Q1", "Q2"]
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
@@ -104,11 +105,12 @@ class CreateEvent extends React.Component {
 						});
 				}
 
-				this.state.blacklist.foreach((ele) => {
+				for (i = 0; i < this.state.blacklist.length; i++)
+				{
 					axios
-						.post(`blacklist/addBlackList`, {
+						.post(`blackList/addBlacklist`, {
 							event: { id: res.data },
-							email: ele,
+							email: this.state.blacklist[i],
 						})
 						.then((res) => {
 							console.log(res.data);
@@ -116,7 +118,7 @@ class CreateEvent extends React.Component {
 						.catch((err) => {
 							console.error(err);
 						});
-				});
+				}
 
 
 				this.setState({
