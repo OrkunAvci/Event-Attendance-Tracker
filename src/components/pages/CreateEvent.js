@@ -77,6 +77,7 @@ class CreateEvent extends React.Component {
 				eventUrl: this.state.eventLink,
 				authorization: parseInt(this.state.auth),
 				loyalty: parseInt(this.state.loyalty),
+				max: this.state.max,
 				form: {
 					questionStrs: strQuestions,
 					questionInts: intQuestions
