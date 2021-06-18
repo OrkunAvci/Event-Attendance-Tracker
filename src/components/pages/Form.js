@@ -126,7 +126,7 @@ export class Form extends Component {
 			event: this.state.event,
 			answerStr: strAnswers,
 			answerInt: intAnswers,
-			authorization: (this.state.accountId === undefined || this.state.accountId === 0) ? 0 : 1
+			authorization: (this.props.accountId || this.props.accountId === 0) ? 0 : 1
 		})
 		.then((res) => {
 			console.log(res);
@@ -159,7 +159,7 @@ export class Form extends Component {
 				<h2 style={headingStyle}>{(this.state.event === null) ? "" : this.state.event.name}</h2>
 				<form>
 					<label className="labelStyle">Email?</label>
-					<input className="inputStyle" type="email" name="email" onChange={this.update_fields}/>
+					<input className="input2Style" type="email" name="email" onChange={this.update_fields}/>
 
 					<div id="strQuestions"></div>
 
@@ -206,12 +206,12 @@ const labelStyle = {
 }
 
 const inputStyle = {
-	display : "block",
+	display : "inline-block",
 	marginTop: "4px",
 	marginBottom: "16px",
 	borderRadius: "6px",
 	border: "0",
-	width: "70%",
+	width: "75%",
 	height: "20px",
 	padding: "0px 5px"
 }
