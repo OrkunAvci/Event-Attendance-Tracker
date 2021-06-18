@@ -126,7 +126,7 @@ export class Form extends Component {
 			event: this.state.event,
 			answerStr: strAnswers,
 			answerInt: intAnswers,
-			authorization: (this.props.accountId || this.props.accountId === 0) ? 0 : 1
+			authorization: ((this.props.accountId === 0) ? 0 : 1)
 		})
 		.then((res) => {
 			console.log(res);
