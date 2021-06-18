@@ -24,7 +24,7 @@ export class Form extends Component {
 				accountId: this.props.accountId
 			});
 		}
-
+		
 		let values = query.parse(this.props.location.search);
 		if (values.id === undefined)
 		{
@@ -159,7 +159,7 @@ export class Form extends Component {
 				<h2 style={headingStyle}>{(this.state.event === null) ? "" : this.state.event.name}</h2>
 				<form>
 					<label className="labelStyle">Email?</label>
-					<input className="input2Style" type="email" name="email" onChange={this.update_fields}/>
+					<input className="input2Style" type="email" name="email" onChange={this.update_fields} />
 
 					<div id="strQuestions"></div>
 

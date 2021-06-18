@@ -43,7 +43,7 @@ export class Account extends Component {
 		.then((res)=>{
 			console.log(res.data)
 			this.setState({
-				registered: res.data
+				registered: res.data.filter((ele) => {return new Date() < new Date(ele.endDate)})
 			})
 		})
 		.catch((err)=>{
