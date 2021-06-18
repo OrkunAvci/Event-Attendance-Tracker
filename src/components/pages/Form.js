@@ -5,8 +5,6 @@ import axios from "axios";
 import query from "query-string";
 import PropTypes from 'prop-types';
 
-import "../../css/Form.css"
-
 export class Form extends Component {
 	state = {
 		accountId: this.props.accountId,
@@ -72,7 +70,7 @@ export class Form extends Component {
 			container.appendChild(text);
 
 			let input = document.createElement("input");
-			input.classList.add("inputStyle");
+			input.classList.add("input2Style");
 			input.type = "text";
 			input.id = "SA" + i;
 			container.appendChild(input);
@@ -87,7 +85,7 @@ export class Form extends Component {
 			container.appendChild(text);
 
 			let input = document.createElement("input");
-			input.classList.add("inputStyle");
+			input.classList.add("input2Style");
 			input.type = "number";
 			input.id = "IA" + i;
 			container.appendChild(input);
@@ -160,8 +158,8 @@ export class Form extends Component {
 			<div style={containerStyle}>
 				<h2 style={headingStyle}>{(this.state.event === null) ? "" : this.state.event.name}</h2>
 				<form>
-					<label style={labelStyle}>Email</label>
-					<input style={inputStyle} type="email" name="email" onChange={this.update_fields}/>
+					<label className="labelStyle">Email?</label>
+					<input className="inputStyle" type="email" name="email" onChange={this.update_fields}/>
 
 					<div id="strQuestions"></div>
 

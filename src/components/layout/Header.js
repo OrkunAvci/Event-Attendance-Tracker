@@ -8,41 +8,28 @@ export class Header extends React.Component {
 	state = {
 		id: this.props.id,
 		org: null,
-		accountLink: `/account?id=${this.props.id}`,
-		flag: false
+		accountLink: `/account?id=${this.props.id}`
 	}
 
-	shouldComponentUpdate(newProps){
-		return newProps.id !== this.state.id || (this.state.org !== null && this.state.flag === false);
+	constructor(props){
+		super(props);
+		this.setup = this.setup.bind(this);
 	}
 
-	componentDidUpdate(){
-		if (this.state.org === null)
-		{
-			axios.get(`user/isOrganizer?id=${this.state.id}`)
+	setup = (id) => {
+		axios.get(`user/isOrganizer?id=${id}`)
 			.then((res) => {
 				this.setState({
-					org: res.data
+					org: res.data,
+					id: id,
+					accountLink: `/account?id=${id}`
 				});
 			})
 			.catch(console.error);
-		}
-		else if (this.state.org !== null && this.props.id === 0)
-		{
-			this.setState({
-				org: null
-			});
-		}
-		else
-		{
-			this.setState({
-				flag: true
-			});
-		}
-		this.setState({
-			id: this.props.id,
-			accountLink: `/account?id=${this.props.id}`
-		});
+	}
+
+	componentDidUpdate(){
+		this.props.call(this.setup);
 	}
 
 	render () {

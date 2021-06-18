@@ -160,8 +160,7 @@ class Event extends Component {
 								{new Date(this.state.event.creationDate).toLocaleDateString(
 									"en-TR",
 									this.state.dateOptions
-								)}
-								.
+								)}.
 							</p>
 						) : (
 							""
@@ -173,8 +172,7 @@ class Event extends Component {
 								{new Date(this.state.event.formDate).toLocaleDateString(
 									"en-TR",
 									this.state.dateOptions
-								)}
-								.
+								)}.
 							</p>
 						) : (
 							""
@@ -186,8 +184,7 @@ class Event extends Component {
 								{new Date(this.state.event.startDate).toLocaleString(
 									"en-TR",
 									this.state.dateOptions
-								)}
-								.
+								)}.
 							</p>
 						) : (
 							""
@@ -199,8 +196,15 @@ class Event extends Component {
 								{new Date(this.state.event.endDate).toLocaleString(
 									"en-TR",
 									this.state.dateOptions
-								)}
-								.
+								)}.
+							</p>
+						) : (
+							""
+						)}
+
+						{this.state.event ? (
+							<p style={pStyle}>
+								Loyalty threshold for this event is {this.state.event.loyalty}%.
 							</p>
 						) : (
 							""
@@ -211,8 +215,7 @@ class Event extends Component {
 								Event is created by{" "}
 								{this.state.event.user.name +
 									" " +
-									this.state.event.user.surname}
-								.
+									this.state.event.user.surname}.
 							</p>
 						) : (
 							""

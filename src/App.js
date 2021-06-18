@@ -29,6 +29,7 @@ class App extends Component {
 		this.setState({
 			accountId: id
 		});
+		this.setupChild(id);
 	}
 
 	logout = () => {
@@ -44,6 +45,7 @@ class App extends Component {
 					<div className="container">
 						<Header
 							id={this.state.accountId}
+							call={setup => this.setupChild = setup}
 						/>
 
 						<Route exact={true} path="/" component={Homepage} />

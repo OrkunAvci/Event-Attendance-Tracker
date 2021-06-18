@@ -25,7 +25,7 @@ class Events extends React.Component {
 			.then((res) => {
 				console.log(res.data);
 				this.setState({
-					list: res.data.filter((eve) => ( (new Date() < new Date(eve.formDate)) || ( (new Date() > new Date(eve.startDate)) && (new Date() < new Date(eve.endDate)) ) ))
+					list: res.data.filter((eve) => ((new Date() < new Date(eve.formDate)) || ( (new Date() > new Date(eve.startDate)) && (new Date() < new Date(eve.endDate)) ) ))
 				});
 			})
 			.catch((err) => {

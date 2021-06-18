@@ -10,11 +10,11 @@ class Log extends React.Component {
 		form: null
 	}
 
-	componentDidMount()
+	async componentDidMount()
 	{
 		const values = query.parse(this.props.location.search);
 
-		axios
+		await axios
 			.get(`/registration/getRegistration?email=${values.email}&eventId=${values.id}`)
 			.then((res) => {
 				this.setState({
@@ -24,7 +24,7 @@ class Log extends React.Component {
 			})
 			.catch(console.error);
 		
-		axios
+		await axios
 			.get(`/event/getForm?id=${values.id}`)
 			.then((res) => {
 				this.setState({
@@ -33,10 +33,46 @@ class Log extends React.Component {
 				console.log(res.data);
 			})
 			.catch(console.error);
+		
+		this.setup();
 	}
 
 	capitalize = function(str) {
 		return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+
+	setup = () => {
+		let container = document.getElementById("container");
+		let i;
+		let strNoQ = this.state.form.questionStrs.length;
+		for (i=0; i<strNoQ; i++){
+			let text = document.createElement("div");
+			text.classList.add("questionStyle");
+			text.innerHTML = "Question: " + this.state.form.questionStrs[i].question;
+			container.appendChild(text);
+
+			text = document.createElement("div");
+			text.classList.add("answerStyle");
+			text.innerHTML = "Answer: " + this.state.registration.answerStr[i].answer;
+			container.appendChild(text);
+
+			container.appendChild(document.createTextNode("_________________________________________"));
+		}
+
+		let IntNoQ = this.state.form.questionInts.length;
+		for (i=0; i<IntNoQ; i++){
+			let text = document.createElement("div");
+			text.classList.add("questionStyle");
+			text.innerHTML = "Question: " + this.state.form.questionInts[i].question;
+			container.appendChild(text);
+
+			text = document.createElement("div");
+			text.classList.add("answerStyle");
+			text.innerHTML = "Answer: " + this.state.registration.answerInt[i].answer;
+			container.appendChild(text);
+
+			container.appendChild(document.createTextNode("_________________________________________"));
+		}
 	}
 
 	render(){
@@ -49,71 +85,10 @@ class Log extends React.Component {
 						<div style={headerStyle}>{this.state.registration.email}</div>
 						<div style={headerStyle}>{(this.state.registration.attended) ? "Attended" : "Did Not Attend"}</div>
 						<div style={{textAlign: "left"}}>
-						______________________________________________________________________________________________
-							{
-								(this.state.form.formField.intField1) ?
-								<div>
-									<div style={questionStyle}>Question: {this.state.form.formLabel.intField1}</div>
-									<div style={answerStyle}>Answer: Answer: {this.state.registration.intField1}</div>
-									______________________________________________________________________________________________
-								</div> : ""
-							}
-							{
-								(this.state.form.formField.intField2) ?
-								<div>
-									<div style={questionStyle}>Question: {this.state.form.formLabel.intField2}</div>
-									<div style={answerStyle}>Answer: {this.state.registration.intField2}</div>
-									______________________________________________________________________________________________
-								</div> : ""
-							}
-							{
-								(this.state.form.formField.strField1) ?
-								<div>
-									<div style={questionStyle}>Question: {this.state.form.formLabel.strField1}</div>
-									<div style={answerStyle}>Answer: {this.state.registration.strField1}</div>
-									______________________________________________________________________________________________
-								</div> : ""
-							}
-							{
-								(this.state.form.formField.strField2) ?
-								<div>
-									<div style={questionStyle}>Question: {this.state.form.formLabel.strField2}</div>
-									<div style={answerStyle}>Answer: {this.state.registration.strField2}</div>
-									______________________________________________________________________________________________
-								</div> : ""
-							}
-							{
-								(this.state.form.formField.strField3) ?
-								<div>
-									<div style={questionStyle}>Question: {this.state.form.formLabel.strField3}</div>
-									<div style={answerStyle}>Answer: {this.state.registration.strField3}</div>
-									______________________________________________________________________________________________
-								</div> : ""
-							}
-							{
-								(this.state.form.formField.chkField1) ?
-								<div>
-									<div style={questionStyle}>Question: {this.state.form.formLabel.chkField1}</div>
-									<div style={answerStyle}>Answer: {this.capitalize(this.state.registration.chkField1.toString())}</div>
-									______________________________________________________________________________________________
-								</div> : ""
-							}
-							{
-								(this.state.form.formField.chkField2) ?
-								<div>
-									<div style={questionStyle}>Question: {this.state.form.formLabel.chkField2}</div>
-									<div style={answerStyle}>Answer: {this.capitalize(this.state.registration.chkField2.toString())}</div>
-									______________________________________________________________________________________________
-								</div> : ""
-							}
-							{
-								(this.state.form.formField.chkField3) ?
-								<div>
-									<div style={questionStyle}>Question: {this.state.form.formLabel.chkField3}</div>
-									<div style={answerStyle}>Answer: {this.capitalize(this.state.registration.chkField3.toString())}</div>
-									______________________________________________________________________________________________
-								</div> : ""
-							}
+						____________________________________________________________________________________________________________________________________________
+
+						<div id="container"></div>
+
 						</div>
 					</div>
 				}
@@ -146,14 +121,6 @@ const headerStyle = {
 	fontSize: "1.3rem",
 	color: "white",
 	margin: "8px 0"
-}
-
-const questionStyle = {
-	marginTop: "8px",
-	color: "white"
-}
-
-const answerStyle = {
 }
 
 export default withRouter(Log);

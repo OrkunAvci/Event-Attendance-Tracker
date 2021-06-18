@@ -2,8 +2,6 @@ import React from 'react'
 import axios from "axios";
 import PropTypes from "prop-types";
 
-import "../../css/CreateEvent.css";
-
 class CreateEvent extends React.Component {
 	state = {
 		accountId: this.props.accountId,
@@ -59,8 +57,8 @@ class CreateEvent extends React.Component {
 			.catch(console.error);
 
 		await this.setState({
-			blacklist: (this.state.blacklist !== "") ? this.state.blacklist.split(',') : [],
-			whitelist: (this.state.whitelist !== "") ? this.state.whitelist.split(',') : []
+			blacklist: (this.state.blacklist !== "" && typeof this.state.blacklist === "string") ? this.state.blacklist.split(',') : [],
+			whitelist: (this.state.whitelist !== "" && typeof this.state.whitelist === "string") ? this.state.whitelist.split(',') : []
 		});
 		
 		await axios
@@ -144,7 +142,7 @@ class CreateEvent extends React.Component {
 		container.appendChild(text);
 
 		let input = document.createElement("input");
-		input.classList.add("inputStyle");
+		input.classList.add("input1Style");
 		input.type = "text";
 		input.id = "SQ" + number;
 		container.appendChild(input);
@@ -165,7 +163,7 @@ class CreateEvent extends React.Component {
 		container.appendChild(text);
 
 		let input = document.createElement("input");
-		input.classList.add("inputStyle");
+		input.classList.add("input1Style");
 		input.type = "text";
 		input.id = "IQ" + number;
 		container.appendChild(input);
