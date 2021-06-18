@@ -8,7 +8,6 @@ import UserList from "../UserList";
 class Analytics extends React.Component {
 	state = {
 		event: null,
-		list: [],
 		attended: [],
 		didNotAttend: []
 	};
@@ -29,12 +28,22 @@ class Analytics extends React.Component {
 		await axios
 			.get(`registration/getRegistrations?id=${values.id}`)
 			.then((res) => {
-				this.setState({
-					list: res.data,
-					attended: res.data.filter((ele) => ele.attended === true),
-					didNotAttend: res.data.filter((ele) => ele.attended !== true),
-				});
-			})
+					this.setState({
+						attended: res.data.filter((ele) => ele.attended === true),
+						didNotAttend: res.data.filter((ele) => ele.attended !== true)
+					})
+				})
+			.catch((err) => {
+				console.error(err);
+			});
+
+		await axios
+			.get(`registration/getAnalytics?eventId=${values.id}`)
+			.then((res) => {
+					this.setState({
+						analytics: res.data
+					})
+				})
 			.catch((err) => {
 				console.error(err);
 			});
@@ -43,17 +52,20 @@ class Analytics extends React.Component {
 	render() {
 		return (
 			<div style={mainContainerStyle}>
-				<div style={topContainerStyle}>
-					<div style={nameStyle}>{(this.state.event) ? this.state.event.name : ""}</div>
-					<div style={textStyle}>{`Total of ${this.state.list.length} people has registered to this event.`}</div>
-					<div style={textStyle}>{`Out of them ${this.state.attended.length} people has attended the event.`}</div>
-					<div style={textStyle}>{`And ${this.state.didNotAttend.length} of them did not attend.`}</div>
-					<div style={textStyle}>__________________________________________________________________________</div>
-					<div style={textStyle}>{`Total of ${this.state.list.length} people has registered to this event.`}</div>
-					<div style={textStyle}>{`Out of them ${this.state.attended.length} people has attended the event.`}</div>
-					<div style={textStyle}>{`And ${this.state.didNotAttend.length} people did not attend.`}</div>
-					<div style={textStyle}>__________________________________________________________________________</div>
-				</div>
+				{
+					(!this.state.analytics) ? "" :
+					<div style={topContainerStyle}>
+						<div style={nameStyle}>{(this.state.event) ? this.state.event.name : ""}</div>
+						<div style={textStyle}>{`Total of ${this.state.analytics.registeredCount} people has registered to this event.`}</div>
+						<div style={textStyle}>{`Out of them ${this.state.analytics.attendedCount} people has attended the event.`}</div>
+						<div style={textStyle}>{`And ${this.state.analyticsnotAttendedCount} of them did not attend.`}</div>
+						<div style={textStyle}>_______________________________________________________</div>
+						<div style={textStyle}>{`Out of ${this.state.analytics.registeredCount} registrations ${this.state.analytics.registeredUserCount} of them were users and ${this.state.analytics.registeredGuestCount} of them were guests.`}</div>
+						<div style={textStyle}>{`Out of ${this.state.analytics.attendedCount} attendants ${this.state.analytics.attendedUserCount} of them were users and ${this.state.analytics.attendedGuestCount} of them were guests.`}</div>
+						<div style={textStyle}>{`Out of ${this.state.analytics.notAttendedCount} non-attendants ${this.state.analytics.notAttendedUserCount} of them were users and ${this.state.analytics.notAttendedGuestCount} of them were guests.`}</div>
+						<div style={textStyle}>__________________________________________________________________________________</div>
+					</div>
+				}
 				<div style={bottomContainerStyle}>
 					{
 						this.state.event ?
