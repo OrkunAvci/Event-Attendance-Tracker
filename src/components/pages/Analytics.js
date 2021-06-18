@@ -8,6 +8,7 @@ import UserList from "../UserList";
 class Analytics extends React.Component {
 	state = {
 		event: null,
+		list: [],
 		attended: [],
 		didNotAttend: []
 	};
@@ -22,7 +23,6 @@ class Analytics extends React.Component {
 				this.setState({
 					event: res.data,
 				});
-				console.log(this.state.event);
 			})
 			.catch(console.error);
 		
@@ -30,11 +30,10 @@ class Analytics extends React.Component {
 			.get(`registration/getRegistrations?id=${values.id}`)
 			.then((res) => {
 				this.setState({
+					list: res.data,
 					attended: res.data.filter((ele) => ele.attended === true),
 					didNotAttend: res.data.filter((ele) => ele.attended !== true),
 				});
-				console.log(this.state.attended);
-				console.log(this.state.didNotAttend);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -45,9 +44,15 @@ class Analytics extends React.Component {
 		return (
 			<div style={mainContainerStyle}>
 				<div style={topContainerStyle}>
-					<div>
-						Some random text.
-					</div>
+					<div style={nameStyle}>{(this.state.event) ? this.state.event.name : ""}</div>
+					<div style={textStyle}>{`Total of ${this.state.list.length} people has registered to this event.`}</div>
+					<div style={textStyle}>{`Out of them ${this.state.attended.length} people has attended the event.`}</div>
+					<div style={textStyle}>{`And ${this.state.didNotAttend.length} of them did not attend.`}</div>
+					<div style={textStyle}>__________________________________________________________________________</div>
+					<div style={textStyle}>{`Total of ${this.state.list.length} people has registered to this event.`}</div>
+					<div style={textStyle}>{`Out of them ${this.state.attended.length} people has attended the event.`}</div>
+					<div style={textStyle}>{`And ${this.state.didNotAttend.length} people did not attend.`}</div>
+					<div style={textStyle}>__________________________________________________________________________</div>
 				</div>
 				<div style={bottomContainerStyle}>
 					{
@@ -100,9 +105,22 @@ const topContainerStyle = {
 const bottomContainerStyle = {};
 
 const headerStyle = {
-	fontSize: "1.3rem",
+	fontSize: "1.4rem",
 	color: "black",
 	marginBottom: "20px",
+};
+
+const textStyle = {
+	fontSize: "1.1rem",
+	color: "white",
+	margin: "6px 0",
+	textAlign: "left"
+};
+
+const nameStyle = {
+	color: "white",
+	fontSize: "1.4rem",
+	marginBottom: "24px"
 };
 
 export default withRouter(Analytics);

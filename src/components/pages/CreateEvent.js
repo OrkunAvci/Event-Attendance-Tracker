@@ -13,12 +13,19 @@ class CreateEvent extends React.Component {
 		loyalty: 0,
 		eventLink: "",
 		description: "",
+		max: 100,
 		blacklist: "",
 		whitelist: "",
 		user: null,
 		output: "",
-		strQuestionNumber: 0,
-		intQuestionNumber: 0
+		strQuestions: [],
+		intQuestions: []
+	}
+
+	constructor(props){
+		super(props);
+		this.clear_str_field = this.clear_str_field.bind(this);
+		this.clear_int_field = this.clear_int_field.bind(this);
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
@@ -28,24 +35,23 @@ class CreateEvent extends React.Component {
 
 		let strQuestions = [];
 		let intQuestions = [];
-		let strNoQ = this.state.strQuestionNumber;
-		let intNoQ = this.state.intQuestionNumber;
+		let strNoQ = document.getElementById("strQuestions").childNodes.length;
+		let intNoQ = document.getElementById("intQuestions").childNodes.length;
 		let i;
 		for (i=0; i<strNoQ; i++)
 		{
-			let str = document.getElementById("SQ" + i);
+			let str = document.getElementById("SQ" + i).children[1].value;
 			strQuestions.push({
-				question: str.value
+				question: str
 			});
 		}
 		for (i=0; i<intNoQ; i++)
 		{
-			let int = document.getElementById("IQ" + i);
+			let int = document.getElementById("IQ" + i).children[1].value;
 			intQuestions.push({
-				question: int.value
+				question: int
 			})
 		}
-		console.log(strQuestions, intQuestions);
 
 		await axios
 			.get(`user/getUser?id=${this.state.accountId}`)
@@ -130,63 +136,101 @@ class CreateEvent extends React.Component {
 	add_str_fields = (e) => {
 		e.preventDefault();
 
-		let number = this.state.strQuestionNumber;
-		this.setState({
-			strQuestionNumber: number + 1
-		});
+		let number = document.getElementById("strQuestions").childNodes.length;
 		let container = document.getElementById("strQuestions");
+
+		let miniContainer = document.createElement("div");
+		miniContainer.id = "SQ" + number;
 
 		let text = document.createElement("div");
 		text.classList.add("divStyle");
 		text.innerHTML = "String Question " + (number + 1);
-		container.appendChild(text);
+		miniContainer.appendChild(text);
 
 		let input = document.createElement("input");
 		input.classList.add("input1Style");
 		input.type = "text";
-		input.id = "SQ" + number;
-		container.appendChild(input);
+		input.name = "SQ" + number;
+		miniContainer.appendChild(input);
+
+		let button = document.createElement("button");
+		button.type = "submit";
+		button.classList.add("buttonStyle");
+		button.name = "SQ" + number;
+		button.onclick = this.clear_str_field;
+		button.innerHTML = "X"
+		miniContainer.appendChild(button);
+
+		container.appendChild(miniContainer);
 	}
 
 	add_int_fields = (e) => {
 		e.preventDefault();
 
-		let number = this.state.intQuestionNumber;
-		this.setState({
-			intQuestionNumber: number + 1
-		});
+		let number = document.getElementById("intQuestions").childNodes.length;
 		let container = document.getElementById("intQuestions");
+
+		let miniContainer = document.createElement("div");
+		miniContainer.id = "IQ" + number;
 
 		let text = document.createElement("div");
 		text.classList.add("divStyle");
 		text.innerHTML = "Integer Question " + (number + 1);
-		container.appendChild(text);
+		miniContainer.appendChild(text);
 
 		let input = document.createElement("input");
 		input.classList.add("input1Style");
 		input.type = "text";
-		input.id = "IQ" + number;
-		container.appendChild(input);
+		input.name = "IQ" + number;
+		miniContainer.appendChild(input);
+
+		let button = document.createElement("button");
+		button.type = "submit";
+		button.classList.add("buttonStyle");
+		button.name = "IQ" + number;
+		button.onclick = this.clear_int_field;
+		button.innerHTML = "X"
+		miniContainer.appendChild(button);
+
+		container.appendChild(miniContainer);
 	}
 
-	clear_fields = (e) => {
+	clear_str_field= (e) => {
 		e.preventDefault();
 
-		let container = document.getElementById("intQuestions");
-		while (container.hasChildNodes()) {
-			container.removeChild(container.lastChild);
-		}
-		this.setState({
-			strQuestionNumber: 0
-		});
+		let ele = document.getElementById(e.target.name);
+		let container = document.getElementById("strQuestions");
 
-		container = document.getElementById("strQuestions");
-		while (container.hasChildNodes()) {
-			container.removeChild(container.lastChild);
+		container.removeChild(ele);
+
+		let i;
+		for (i=0; i<container.children.length; i++)
+		{
+			console.log(container.children[i]);
+			container.children[i].id = "SQ" + i;
+			container.children[i].children[0].innerHTML = "String Question " + (i + 1);
+			container.children[i].children[1].name = "SQ" + i;
+			container.children[i].children[2].name = "SQ" + i;
+			console.log(container.children[i]);
 		}
-		this.setState({
-			intQuestionNumber: 0
-		});
+	}
+
+	clear_int_field= (e) => {
+		e.preventDefault();
+
+		let ele = document.getElementById(e.target.name);
+		let container = document.getElementById("intQuestions");
+
+		container.removeChild(ele);
+
+		let i;
+		for (i=0; i<container.children.length; i++)
+		{
+			container.children[i].id = "IQ" + i;
+			container.children[i].children[0].innerHTML = "Integer Question " + (i + 1);
+			container.children[i].children[1].name = "IQ" + i;
+			container.children[i].children[2].name = "IQ" + i;
+		}
 	}
 
 	render() {
@@ -219,7 +263,10 @@ class CreateEvent extends React.Component {
 					<input style={inputStyle} type="datetime-local" name="endDate" onChange={this.update_fields} />
 
 					<div style={divStyle}>Attendance Loyalty</div>
-					<input style={inputStyle} type="number" name="loyalty" min="1" max="100" onChange={this.update_fields} />
+					<input style={inputStyle} type="number" name="loyalty" min="0" max="100" onChange={this.update_fields} />
+
+					<div style={divStyle}>What is the maximum number of participants?</div>
+					<input style={inputStyle} type="number" name="max" min="1" max="500" onChange={this.update_fields} />
 
 					<div style={divStyle}>Whitelisted Emails (Separate by comma)</div>
 					<textarea style={textareaStyle} name="whitelist" onChange={this.update_fields} max="512"/>
@@ -241,8 +288,6 @@ class CreateEvent extends React.Component {
 					<button style={buttonStyle} type="submit" onClick={this.add_str_fields}>Add Str Field</button>
 
 					<button style={buttonStyle} type="submit" onClick={this.add_int_fields}>Add Int Field</button>
-
-					<button style={buttonStyle} type="submit" onClick={this.clear_fields}>Clear Fields</button>
 
 					<div id="strQuestions">
 					</div>
@@ -330,7 +375,7 @@ const buttonStyle = {
 	height: "30px",
 	width: "150px",
 	textAlign: "center",
-	margin: "0 16px",
+	margin: "0 24px",
 	marginTop: "40px",
 	marginBottom: "20px",
 	position: "relative",

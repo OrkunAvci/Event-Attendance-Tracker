@@ -22,14 +22,17 @@ a
 }
 
 .input1Style {
-	display : block;
+	display : inline-block;
 	margin-top: 4px;
 	margin-bottom: 16px;
 	border-radius: 6px;
 	border: 0;
-	width: 70%;
+	width: 75%;
 	height: 20px;
-	padding: 0px 5px
+	padding: 0px 5px;
+	text-align: left;
+	position: relative;
+	left: 0;
 }
 
 .labelStyle {
@@ -67,4 +70,17 @@ a
 	margin: 6px 0;
 	color: white;
 	font-size: 1.1rem;
+}
+
+.buttonStyle {
+	display: inline-block;
+	background-color: red;
+	padding: 5px 15px;
+	border-radius: 6px;
+	border: 0;
+	height: 24px;
+	width: 120px;
+	margin: 0 24px;
+	position: relative;
+	left: 0;
 }
