@@ -112,7 +112,7 @@ export class Account extends Component {
 
 					{
 						user ?
-						<p style={pStyle}>
+						<div style={pStyle}>
 							Company: 
 							{
 								(user.company) ?
@@ -122,7 +122,7 @@ export class Account extends Component {
 										<button style={buttonStyle} type="submit" onClick={this.setCompany} >Set Company</button>
 									</div>
 							}
-						</p> : ""
+						</div> : ""
 					}
 
 					<button style={buttonStyle} type="submit" onClick={this.logout}>

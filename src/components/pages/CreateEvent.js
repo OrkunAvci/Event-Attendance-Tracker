@@ -2,6 +2,8 @@ import React from 'react'
 import axios from "axios";
 import PropTypes from "prop-types";
 
+import "../../css/CreateEvent.css";
+
 class CreateEvent extends React.Component {
 	state = {
 		accountId: this.props.accountId,
@@ -12,27 +14,40 @@ class CreateEvent extends React.Component {
 		auth: 0,
 		loyalty: 0,
 		eventLink: "",
-		intField1: "",
-		intField2: "",
-		strField1: "",
-		strField2: "",
-		strField3: "",
-		chkField: "",
-		chkField1: "",
-		chkField2: "",
-		chkField3: "",
 		description: "",
 		blacklist: "",
 		whitelist: "",
 		user: null,
 		output: "",
-		question: ["Q1", "Q2"]
+		strQuestionNumber: 0,
+		intQuestionNumber: 0
 	}
 
 	update_fields = (e) => { this.setState( { [e.target.name]: e.target.value } ) };
 
 	create_event = async (e) => {
 		e.preventDefault();
+
+		let strQuestions = [];
+		let intQuestions = [];
+		let strNoQ = this.state.strQuestionNumber;
+		let intNoQ = this.state.intQuestionNumber;
+		let i;
+		for (i=0; i<strNoQ; i++)
+		{
+			let str = document.getElementById("SQ" + i);
+			strQuestions.push({
+				question: str.value
+			});
+		}
+		for (i=0; i<intNoQ; i++)
+		{
+			let int = document.getElementById("IQ" + i);
+			intQuestions.push({
+				question: int.value
+			})
+		}
+		console.log(strQuestions, intQuestions);
 
 		await axios
 			.get(`user/getUser?id=${this.state.accountId}`)
@@ -47,9 +62,6 @@ class CreateEvent extends React.Component {
 			blacklist: (this.state.blacklist !== "") ? this.state.blacklist.split(',') : [],
 			whitelist: (this.state.whitelist !== "") ? this.state.whitelist.split(',') : []
 		});
-
-		console.log(this.state.blacklist);
-		console.log(this.state.whitelist);
 		
 		await axios
 			.post("event/createEvent", {
@@ -62,26 +74,8 @@ class CreateEvent extends React.Component {
 				authorization: parseInt(this.state.auth),
 				loyalty: parseInt(this.state.loyalty),
 				form: {
-					formField: {
-						intField1: this.state.intField1 !== "",
-						intField2: this.state.intField2 !== "",
-						strField1: this.state.strField1 !== "",
-						strField2: this.state.strField2 !== "",
-						strField3: this.state.strField3 !== "",
-						chkField1: this.state.chkField1 !== "",
-						chkField2: this.state.chkField2 !== "",
-						chkField3: this.state.chkField3 !== "",
-					},
-					formLabel: {
-						intField1: this.state.intField1,
-						intField2: this.state.intField2,
-						strField1: this.state.strField1,
-						strField2: this.state.strField2,
-						strField3: this.state.strField3,
-						chkField1: this.state.chkField1,
-						chkField2: this.state.chkField2,
-						chkField3: this.state.chkField3,
-					},
+					questionStrs: strQuestions,
+					questionInts: intQuestions
 				},
 				user: {
 					id: this.state.accountId,
@@ -135,6 +129,68 @@ class CreateEvent extends React.Component {
 			});
 	}
 
+	add_str_fields = (e) => {
+		e.preventDefault();
+
+		let number = this.state.strQuestionNumber;
+		this.setState({
+			strQuestionNumber: number + 1
+		});
+		let container = document.getElementById("strQuestions");
+
+		let text = document.createElement("div");
+		text.classList.add("divStyle");
+		text.innerHTML = "String Question " + (number + 1);
+		container.appendChild(text);
+
+		let input = document.createElement("input");
+		input.classList.add("inputStyle");
+		input.type = "text";
+		input.id = "SQ" + number;
+		container.appendChild(input);
+	}
+
+	add_int_fields = (e) => {
+		e.preventDefault();
+
+		let number = this.state.intQuestionNumber;
+		this.setState({
+			intQuestionNumber: number + 1
+		});
+		let container = document.getElementById("intQuestions");
+
+		let text = document.createElement("div");
+		text.classList.add("divStyle");
+		text.innerHTML = "Integer Question " + (number + 1);
+		container.appendChild(text);
+
+		let input = document.createElement("input");
+		input.classList.add("inputStyle");
+		input.type = "text";
+		input.id = "IQ" + number;
+		container.appendChild(input);
+	}
+
+	clear_fields = (e) => {
+		e.preventDefault();
+
+		let container = document.getElementById("intQuestions");
+		while (container.hasChildNodes()) {
+			container.removeChild(container.lastChild);
+		}
+		this.setState({
+			strQuestionNumber: 0
+		});
+
+		container = document.getElementById("strQuestions");
+		while (container.hasChildNodes()) {
+			container.removeChild(container.lastChild);
+		}
+		this.setState({
+			intQuestionNumber: 0
+		});
+	}
+
 	render() {
 		return (
 			<div style={containerStyle}>
@@ -179,37 +235,22 @@ class CreateEvent extends React.Component {
 					<div style={radioStyle}><input style={{marginRight: "6px"}} type="radio" value="2" name="auth" onChange={this.update_fields} />Only people in my company can join.</div>
 
 					<div style={divisionStyle}>
-					Registration Form Information (Only fill what is needed):
+					Registration Form Information:
 					<br />
 					------------------------------------------------------------------------
 					</div>
 
-					<div style={divStyle}>Integer Field 1 Question</div>
-					<input style={inputStyle} type="text" name="intField1" onChange={this.update_fields} />
+					<button style={buttonStyle} type="submit" onClick={this.add_str_fields}>Add Str Field</button>
 
-					<div style={divStyle}>Integer Field 2 Question</div>
-					<input style={inputStyle} type="text" name="intField2" onChange={this.update_fields} />
+					<button style={buttonStyle} type="submit" onClick={this.add_int_fields}>Add Int Field</button>
 
-					<div style={divStyle}>String Field 1 Question</div>
-					<input style={inputStyle} type="text" name="strField1" onChange={this.update_fields} />
+					<button style={buttonStyle} type="submit" onClick={this.clear_fields}>Clear Fields</button>
 
-					<div style={divStyle}>String Field 2 Question</div>
-					<input style={inputStyle} type="text" name="strField2" onChange={this.update_fields} />
+					<div id="strQuestions">
+					</div>
 
-					<div style={divStyle}>String Field 3 Question</div>
-					<input style={inputStyle} type="text" name="strField3" onChange={this.update_fields} />
-
-					<div style={divStyle}>Checkbox Question</div>
-					<input style={inputStyle} type="text" name="chkField" onChange={this.update_fields} />
-
-					<div style={divStyle}>Checkbox Answer 1</div>
-					<input style={inputStyle} type="text" name="chkField1" onChange={this.update_fields} />
-
-					<div style={divStyle}>Checkbox Answer 2</div>
-					<input style={inputStyle} type="text" name="chkField2" onChange={this.update_fields} />
-
-					<div style={divStyle}>Checkbox Answer 3</div>
-					<input style={inputStyle} type="text" name="chkField3" onChange={this.update_fields} />
+					<div id="intQuestions">
+					</div>
 
 					<div style={outputStyle}>{this.state.output}</div>
 
@@ -228,7 +269,7 @@ CreateEvent.propTypes = {
 //CSS Styling:
 const containerStyle = {
 	height: "auto",
-	width: "700px",
+	width: "840px",
 	margin: "auto",
 	padding: "40px 70px",
 	paddingBottom: "50px",
@@ -236,7 +277,7 @@ const containerStyle = {
 	display: "inline-block",
 	position: "relative",
 	marginTop: "100px",
-	background: "linear-gradient(45deg, rgba(0, 217, 255, 0.436) 0%, rgb(48, 48, 48, 0.79) 12%, rgba(48, 48, 48, 0.79) 88%, rgba(153, 0, 255, 0.5) 100%)",
+	background: "linear-gradient(45deg, rgba(0, 217, 255, 0.436) 0%, rgb(48, 48, 48, 0.79) 8%, rgba(48, 48, 48, 0.79) 92%, rgba(153, 0, 255, 0.5) 100%)",
 	borderRadius: "48px",
 	marginBottom: "150px"
 }
@@ -291,6 +332,7 @@ const buttonStyle = {
 	height: "30px",
 	width: "150px",
 	textAlign: "center",
+	margin: "0 16px",
 	marginTop: "40px",
 	marginBottom: "20px",
 	position: "relative",

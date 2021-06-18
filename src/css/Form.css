@@ -1,0 +1,16 @@
+.inputStyle {
+	display : block;
+	margin-top: 4px;
+	margin-bottom: 16px;
+	border-radius: 6px;
+	border: 0;
+	width: 70%;
+	height: 20px;
+	padding: 0px 5px
+}
+
+.labelStyle {
+	display : block;
+	color: rgba(255, 253, 228, 0.9);
+	text-align: left;
+}
