@@ -7,6 +7,7 @@ export class Redirect extends Component {
 	state = {
 		id: null,
 		redirection: "",
+		startDate: null,
 		email: "",
 		code: null,
 		output: ""
@@ -24,12 +25,22 @@ export class Redirect extends Component {
 			.get(`/event/getEventById?id=${values.id}`)
 			.then((res) => {
 				this.setState({
-					redirection: res.data.eventUrl
+					redirection: res.data.eventUrl,
+					startDate: res.data.startDate
 				});
 			})
 			.catch(console.error);
 		
 			if (values.email && values.code && this.state.redirection !== "") {
+
+				if (new Date() < new Date(this.state.startDate))
+				{
+					this.setState({
+						output: "Event time hasn't arrived yet. Try again later."
+					});
+					return;
+				}
+
 				await this.setState({
 					email: values.email,
 					code: values.code,

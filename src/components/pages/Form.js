@@ -133,7 +133,7 @@ export class Form extends Component {
 		})
 		.catch((err) => {
 			this.setState({
-				output: err.message,
+				output: "Couldn't register. Please check your fields.",
 			});
 			flag = true;
 			console.error(err);
