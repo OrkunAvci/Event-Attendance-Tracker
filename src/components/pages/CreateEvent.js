@@ -128,7 +128,7 @@ class CreateEvent extends React.Component {
 			})
 			.catch((err) => {
 				this.setState({
-					output: err.message,
+					output: "Event could not be created. Plase check your information.",
 				});
 				console.error(err);
 			});
@@ -286,9 +286,9 @@ class CreateEvent extends React.Component {
 					------------------------------------------------------------------------
 					</div>
 
-					<button style={buttonStyle} type="submit" onClick={this.add_str_fields}>Add Str Field</button>
+					<button style={buttonStyle} type="submit" onClick={this.add_str_fields}>Add Str Question</button>
 
-					<button style={buttonStyle} type="submit" onClick={this.add_int_fields}>Add Int Field</button>
+					<button style={buttonStyle} type="submit" onClick={this.add_int_fields}>Add Int Question</button>
 
 					<div id="strQuestions">
 					</div>
