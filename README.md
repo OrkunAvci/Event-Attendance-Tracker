@@ -26,7 +26,9 @@ We would like to propose a new way of validating and keeping track of attendance
 Because the unique credentials in the system is used, each code will also be unique.This approach eliminates the problem of distinguishing between attendants per eventand distinguishing between events per attendant.
 
 There have been research on how we could increase the attendance. One such researchis[3], and we have taken two of the bullet points from this paper.
+
 	1. The  system  should  have  sound  and  reasonable  attendance  policies  withconsequences for absence,
 	2. Good attendance should be valued and rewarded
+
 We  have  incorporated  the  first  principle  into  the  tracking  system  and  the  secondprinciple into the filtering system.
 
