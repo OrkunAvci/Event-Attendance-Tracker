@@ -1,6 +1,6 @@
 # Event-Attendance-Tracker
 
-My Mid-point Thessis project.
+My Mid-point Thesis project.
 
 The documentation can be found in `documentation.pdf`. It is one week behind the development however, some features have been added.
 
