@@ -10,7 +10,7 @@ I am not no longer developing this project.
 
 # A sniplet from the documentation and the answer to why we did this
 
-```
+
 ## Intoduction
 
 Since  the  start  of  the  pandemic,  many  companies  have  been  forced  to  shut  downtheir offices and migrate over to working from home.  This sudden change have ledto an increased demand for remote work environments.  And thanks to the increasein demand, online events like meetings, gatherings, classes, and similar cooperativeactivities have seen exponential growth in both number and magnitude over the courseof the pandemic.
@@ -29,4 +29,4 @@ There have been research on how we could increase the attendance. One such resea
 	1. The  system  should  have  sound  and  reasonable  attendance  policies  withconsequences for absence,
 	2. Good attendance should be valued and rewarded
 We  have  incorporated  the  first  principle  into  the  tracking  system  and  the  secondprinciple into the filtering system.
-```
+
