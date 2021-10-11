@@ -2,7 +2,7 @@
 
 My Mid-point Thesis project.
 
-The documentation can be found in `documentation.pdf`. It is one week behind the development however, some features have been added.
+The documentation can be found in `documentation.pdf`. It is one week behind the development however, some features have been added after the docuemnt has been written.
 
 I am not no longer developing this project.
 
